@@ -1,8 +1,8 @@
 <?php
 class SinhVienModel extends DB{
-    public function GetSV(){
-        return "Nguyen Van Teo";
-    }
+    // public function GetSV(){
+    //     return "kle";
+    // }
 
     public function Tong($n, $m){
         return $n + $m;
