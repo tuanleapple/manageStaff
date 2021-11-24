@@ -22,30 +22,28 @@
             <table id="tableCollection" class="table table-resposive table-hover table-striped table-bordered text-center">
             <thead class="thead-dark">
                 <tr class="table-primary">
-                    <th>Số thứ tự</th>
+                    <th>stt</th>
                     <th>Title</th>
                     <th>Đường dẫn link</th>
                     <th>Chức Năng</th>
                 </tr>
-                @foreach($collection as $key => $value)
+                <?php foreach($data['collection'] as $key => $value) : ?>
                     <tr>
-                        <th scope="row">{{$collection->firstItem()+$key}}</th>
-                        <td>{{$value['title']}}</td>
-                        <td>{{$value['slug']}}</td>
-                        <td><i class="fas fa-edit icon-table-edit" data-id={{$value['id']}} data-title="{{$value['title']}}" data-des="{{$value['description']}}" data-parent="{{$value['parent_id']}}"></i>
-                            <i class="fas fa-trash-alt icon-table-delete" data-id="{{$value['id']}}" data-title="{{$value['title']}}"></i>
+                        <td><?= $key ?></td>
+                        <td><?= $value['title']?></td>
+                        <td><?= $value['slug']?></td>
+                        <td><i class="fas fa-edit icon-table-edit" data-id=<?= $value['id']?> data-title="<?= $value['title']?>" data-des="<?= $value['description']?>" data-parent="<?= $value['parent_id']?>"></i>
+                            <i class="fas fa-trash-alt icon-table-delete" data-id="<?= $value['id']?>" data-title="<?= $value['title']?>"></i>
                         </td>
                     </tr>
-                @endforeach
+                    <?php endforeach; ?>
             </thead>
             <tbody></tbody>
         </table>
         </div>
         <div class="d-flex justify-content-end p-e-5 c-b">
-           Tổng số danh mục trả về : {{ $collection->total() }}
         </div>
         <div class="d-flex justify-content-end p-e-5">
-            {{$collection->links("pagination::bootstrap-4")}}
         </div>
     </div>
     

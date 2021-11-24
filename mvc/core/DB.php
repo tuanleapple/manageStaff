@@ -1,17 +1,18 @@
 <?php
 
 class DB{
-    
+
     public $con;
-    protected $servername = "localhost";
+    protected $servername = "127.0.0.1";
     protected $username = "root";
     protected $password = "";
     protected $dbname = "angle_devilstore";
 
     function __construct(){
-        $this->con = mysqli_connect($this->servername, $this->username, $this->password);
-        mysqli_select_db($this->con, $this->dbname);
-        mysqli_query($this->con, "SET NAMES 'utf8'");
+       
+            $this->conn = new PDO("mysql:host={$this->servername};dbname={$this->dbname}", $this->username, $this->password);
+            $this->conn->exec('set names utf8');
+    
     }
 
 }

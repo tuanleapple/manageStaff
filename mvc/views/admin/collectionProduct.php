@@ -13,7 +13,7 @@
             </div>
             <div class="card-header-right"><button class="btn btn-block btn-primary active" id="createCollection"
                     type="button" aria-pressed="true">
-                    <li style="list-style: none"><a href="/admin/collectionProduct/create" style="color:#fff;text-decoration:none" >Tạo Danh Mục </a></li>
+                    <li style="list-style: none"><a href="/collectionProduct/create" style="color:#fff;text-decoration:none" >Tạo Danh Mục </a></li>
                     </button></div>
         </div>
         <div class="card-body">
@@ -25,22 +25,20 @@
                     <th>Đường dẫn link</th>
                     <th>Chức Năng</th>
                 </tr>
-                @foreach($collectionProduct as $key => $value)
+            </thead>
+            <tbody>
+            <?php foreach($data['collectionProduct'] as $key => $value) :?>
                 <tr>
-                    <th scope="row">{{$collectionProduct->firstItem() +$key}}</th>
-                    <td>{{$value['title']}}</td>
-                    <td>{{$value['slug']}}</td>
-                    <td><a href="/admin/collectionProduct/edit/{{$value['id']}}"><i class="fas fa-edit icon-table-edit"></i></a>
-                        <i class="fas fa-trash-alt icon-table-delete" data-id="{{$value['id']}}" data-title="{{$value['title']}}"></i>
+                    <th scope="row"><?=  $key+1 ?></th>
+                    <td><?= $value['title'] ?></td>
+                    <td><?=$value['slug']?></td>
+                    <td><a href="/admin/collectionProduct/edit/<?=$value['id']?>"><i class="fas fa-edit icon-table-edit"></i></a>
+                        <i class="fas fa-trash-alt icon-table-delete" data-id="<?=$value['id']?>" data-title="<?=$value['title']?>"></i>
                     </td>
                 </tr>
-            @endforeach
-            </thead>
-            <tbody></tbody>
+                <?php endforeach;?>
+            </tbody>
         </table>
-        </div>
-       <div class="d-flex justify-content-end p-e-5 c-b">
-           {{$collectionProduct->appends(['sort' => 'votes'])->links()}}
         </div>
     </div>
     

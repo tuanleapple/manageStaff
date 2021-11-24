@@ -55,14 +55,11 @@
                 <div class="menu-desktop">
                     <div class="nav-menu">
                         <ul class="clonemenu">
-                            @if (!empty($collection))
-                                @foreach($collection as $key => $value)
+                            <?php foreach ($data["collection"] as $key => $value): ?>
                                     <li class="nav1">
-                                        <a href="#">{{$value['title']}}</a>
+                                        <a href="#"><?= $value['title'] ?></a>
                                     </li>
-                                @endforeach
-                            @endif
-                            
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
@@ -81,11 +78,11 @@
                         <li class="breadcrumb-item">
                             <a href="/">Trang chủ</a>
                         </li>
-                    @if($type ?? '')
+                    <?php if(!empty($data["type"])) :?>
                         <li class="breadcrumb-item">
-                            <a href="#">{{$type}}</a>
+                            <a href="#"><?= $data["type"] ?></a>
                         </li>
-                    @endif
+                    <?php endif;?>
                     @if($product ?? '')
                         <li class="breadcrumb-item">
                             <a href="/products/{{$product['slug']}}">{{$product['title']}}</a>

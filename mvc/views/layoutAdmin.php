@@ -62,7 +62,7 @@
                                 <i class="fas fa-bell"></i>
                                 <i class="fas fa-list-ul"></i>
                                 <i class="far fa-envelope"></i>
-                                <img src="{{asset('images/1.jpg')}}" alt="user_image">
+                                <img src="/public/images/1.jpg" alt="user_image">
                             </div>
                         </div>
                     </div>
@@ -73,37 +73,21 @@
     <div class="nav-main">
         <div class="nav-left">
             <div class="menu-left">
-                    @if(session('user.role') == 1)
-                    <li class="menu-item">
-                        <a href="/admin/collection"><span><i class="fas fa-tachometer-alt"></i></span><span class="title_nav_left">Dashboard</span></a>
-                    </li> 
                     <li class="menu-item">
                         <a href="/admin/user"><span><i class="fas fa-user-plus item"></i></span><span class="title_nav_left">User</span></a>
+                    </li> 
+                    <li class="menu-item">
+                        <a href="/collection"><span><i class="fas fa-ethernet"></span></i><span class="title_nav_left">Menu</span></a>
                     </li>
                     <li class="menu-item">
-                        <a href="/admin/setting"><span><i class="fas fa-cogs"></i></span><span class="title_nav_left">Setting</span></a>
-                    </li>
-                    @endif
-                    <li class="menu-item">
-                        <a href="/admin/collection"><span><i class="fas fa-ethernet"></span></i><span class="title_nav_left">Menu</span></a>
-                    </li>
-                    {{-- <li class="menu-item">
-                        <a href="/admin/post"><span><i class="fas fa-address-card item"></span></i><span class="title_nav_left">Post</span></a>
-                    </li>
-                     --}}
-                    <li class="menu-item">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-                        <a href="/admin/collectionProduct"><span><i class="far fa-calendar-minus"></i></span><span class="title_nav_left">Collection Product</span></a>
+                        <a href="/post"><span><i class="fas fa-address-card item"></span></i><span class="title_nav_left">Post</span></a>
                     </li>
                     <li class="menu-item">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-                        <a href="/admin/product"><span><i class="fas fa-dolly-flatbed"></i></span><span class="title_nav_left">Product</span></a>
+                        <a href="/collectionProduct"><span><i class="far fa-calendar-minus"></i></span><span class="title_nav_left">Collection Product</span></a>
                     </li>
-                    {{-- <li class="menu-item">
-                        <a href="menu-link"><span><i class="fas fa-envelope-open"></i></span><span class="title_nav_left">Mail Log</span></a>
-                    </li> --}}
-                    
-                    {{-- <li class="menu-item">
-                        <a href="/admin/frontend"><span><i class="fas fa-eye"></i></span><span class="title_nav_left">Frontend</span></a>
-                    </li> --}}
+                    <li class="menu-item">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+                        <a href="/product"><span><i class="fas fa-dolly-flatbed"></i></span><span class="title_nav_left">Product</span></a>
+                    </li>
                     <li class="menu-item">
                         <a href="/admin/log"><span><i class="fas fa-clock item"></i></span><span class="title_nav_left">History</span></a>
                     </li>

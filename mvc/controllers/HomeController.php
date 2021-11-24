@@ -7,12 +7,16 @@ class HomeController extends BaseController {
 
         // Must have SayHi()
     function SayHi(){
+        $type = 'ALL COLLECTION';
+        $product = $this->model('productModel')->product();
+        $collection = $this->model('collectionModel')->collection();
+        $collection_product = $this->model('collectionProductModel')->collectionProduct();
         $this->view("layout", [
             "Page"=>"main",
-            "Number"=> 1,
-            "Mau"=>"red",
-            "SoThich"=>["A", "B", "C"],
-            "SV" => 'testing' 
+            "product"=> $product,
+            "collection"=> $collection,
+            "collectionProduct"=> $collection_product,
+            "type" => $type 
         ]);
     }
     function view404(){

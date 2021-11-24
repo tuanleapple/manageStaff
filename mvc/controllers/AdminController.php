@@ -17,9 +17,10 @@ class AdminController extends BaseController {
         ]);
     }
     function product(){
+        $product = $this->model('productModel')->productAdmin();
         $this->view("layoutAdmin", [
             "Page"=>"product",
-            "Number"=> 1,
+            "products"=> $product,
             "Mau"=>"red",
             "SoThich"=>["A", "B", "C"],
                 "SV" => 'testing' 
@@ -33,15 +34,16 @@ class AdminController extends BaseController {
         ]);
     }
     function log(){
+        $log = $this->model('LogModel')->logs();
+        // var_dump($log);die;
         $this->view("layoutAdmin", [
             "Page"=>"log",
-
+            "logs"=> $log,
         ]);
     }
     function editProduct(){
         $this->view("layoutAdmin", [
             "Page"=>"editProduct",
-
         ]);
     }
 
@@ -65,16 +67,18 @@ class AdminController extends BaseController {
     }
 
     function collectionProduct(){
+        $collectionProduct = $this->model('collectionProductModel')->collectionProduct();
         $this->view("layoutAdmin", [
             "Page"=>"collectionProduct",
-
+            "collectionProduct"=>$collectionProduct,
         ]);
     }
 
     function collection(){
+        $collection = $this->model('collectionModel')->collection();
         $this->view("layoutAdmin", [
             "Page"=>"collection",
-
+            "collection"=>$collection,
         ]);
     }
     function signup(){

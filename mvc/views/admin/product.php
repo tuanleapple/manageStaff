@@ -9,8 +9,8 @@
         <div class="card-header">
             <div class="card-header-left">
                 <span>Product</span>
-                <form action="{{ route('seacher') }}" method="GET">
-                    <div class="input-group mb-3">
+                <!-- <form action="{{ route('seacher') }}" method="GET"> -->
+                    <!-- <div class="input-group mb-3">
                       @if(!empty($type))
                       <input type="text" class="form-control" placeholder="Nhập tên sản phẩm cần tìm " aria-describedby="basic-addon2" name="search" value="{{$type}}">
                       @else
@@ -20,7 +20,7 @@
                     <button class="btn btn-secondary" type="submit"> Tìm Kiếm </button>
                     </div>
                     </div>
-                    </form>
+                    </form> -->
             </div>
             <div class="card-header-right"><button class="btn btn-block btn-primary active" id="createCollection"
                 type="button" aria-pressed="true">
@@ -31,7 +31,7 @@
             <table id="tableLog" class="table table-resposive table-striped table-bordered text-center l-heght">
             <thead class="thead-dark">
                 <tr class="table-primary">
-                    <th></th>
+                    <!-- <th></th> -->
                     <th>Image</th>
                     <th>Title</th>
                     <th>Slug</th>
@@ -43,24 +43,21 @@
                     <th>Tools</th>
                 </tr>
             </thead>
-            
             <tbody>
-   
-                @foreach($product as $key => $value)
+                <?php foreach($data['products'] as $key => $product) :?>
                 <tr>
-                    <th scope="row">{{$product->firstItem() +$key}}</th>
                     <td>
-                        @if(strlen($value->image) != 0)
-                            <a class="img_table"><img src="/upload/product/{{$value->image}}" alt={{$value->image}}></a>
-                        @else
-                            <a class="img_table"><img src="/images/default_image.png" alt='No Image'></a>
-                        @endif
+                        <?php if(strlen($value['image']) != 0) : ?>
+                            <a class="img_table"><img src="/public/upload/product/<?= $value['image'] ?>" alt=<?= $value['image'] ?></a>
+                        <?php else : ?>
+                            <a class="img_table"><img src="/public/images/default_image.png" alt='No Image'></a>
+                        <?php endif; ?>
                        
                     </td>
-                    <td>{{$value->title}}</td>
-                    <td>{{$value->slug}}</td>
-                    <td>{{$value->price}}</td>
-                    <td>{{$value->qualityProduct}}</td>
+                    <td><?= $value->title ?></td>
+                    <td><?= $value->slug ?></td>
+                    <td><?= $value->price ?></td>
+                    <td><?= $value->qualityProduct ?>}</td>
                     <td>
                         @if($value->display == 1)
                         <input class="form-check-input" type="checkbox" onclick="checkDisplay({{$value->id}})" name="display"  checked>
@@ -81,14 +78,14 @@
                         <i class="fas fa-trash-alt icon-table-delete" data-id="{{$value->id}}" data-title="{{$value->title}}"></i>
                     </td>
                 </tr>
-                @endforeach
+                <?php endforeach;?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end p-e-5 c-b">
-            Tổng số product trả về : {{ $product->total() }}
+            <!-- Tổng số product trả về : {{ $product->total() }} -->
          </div>
          <div class="d-flex justify-content-end p-e-5">
-             {{ $product->links() }}
+             <!-- {{ $product->links() }} -->
          </div>
         </div>
     </div>

@@ -25,15 +25,15 @@
             </thead>
             
             <tbody>
-                @foreach($log as $key => $value)
+                <?php foreach($data['logs'] as $key => $value) :?>
                 <tr>
-                    <th scope="row">{{$log->firstItem()+$key}}</th>
-                    <td>{{$value->module}}</td>
-                    <td>{{$value->fullname}}</td>
-                    <td>{{$value->message}}</td>
-                    <td>{{$value->created_at}}</td>
+                    <th scope="row"><?= $key+1 ?></th>
+                    <td> <?= $value['module'] ?></td>
+                    <td> <?= $value['fullname'] ?></td>
+                    <td> <?= $value['message'] ?></td>
+                    <td> <?= $value['created_at'] ?></td>
                 </tr>
-            @endforeach
+                <?php endforeach;?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end p-e-5 c-b">

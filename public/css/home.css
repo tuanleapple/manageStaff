@@ -110,6 +110,8 @@ img{max-width: 100%;}
 .header-collection{margin-top: 50px;}
 .title_all_product {text-align: center;font-size: 30px;font-weight: bold;justify-content: space-around;}
 .collection{font-weight: 200;font-size: 14px;display: flex;justify-content: center;margin-top: 20px;}
+.collection li{padding-right: 20px;}
+
 .collection .collection-item li{padding-right: 80px;}
 .format_d{font-size: 12px;}
 .content-product-list{display: flex;width: 100%;flex-wrap: wrap;margin-top: 30px;justify-content: space-between;}
