@@ -1,12 +1,19 @@
-# manageStaff
+# ManageStaff
 
-setup 
-+ serve local
-   - xampp
-   - setup host local macos
-    + sudo nano /etc/hosts 
-        127.0.0.1       manageStaff.local
+## Install
 
+***setup VM XAMPP on macos:***
+```
+sudo nano /etc/hosts 
+```
+***Install:***
+```
+sudo nano /etc/hosts 
+```
+***Copy /etc/hosts:***
+```
+127.0.0.1  manageStaff.local
+```
 
 
 
