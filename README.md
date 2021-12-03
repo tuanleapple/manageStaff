@@ -3,6 +3,7 @@
 ## Install
 
 ***setup VM XAMPP on macos:***
+**setup VM XAMPP on macos:**
 ```
 sudo nano /etc/hosts 
 ```
