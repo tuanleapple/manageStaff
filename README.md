@@ -6,7 +6,7 @@
 ```
 https://www.youtube.com/watch?v=K-qXW9ymeYQ
 ```
-*** /Applications/XAMPP/xamppfiles/etc/extra/httpd-vhosts.conf:***
+***Applications/XAMPP/xamppfiles/etc/extra/httpd-vhosts.conf:***
 ```
 <VirtualHost *:80>
     DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs/managestaff/index.php"
@@ -17,7 +17,7 @@ https://www.youtube.com/watch?v=K-qXW9ymeYQ
 	</Directory>
 </VirtualHost>
 ```
-***Install:***
+***Install Host local:***
 ```
 sudo nano /etc/hosts 
 ```
@@ -25,7 +25,11 @@ sudo nano /etc/hosts
 ```
 127.0.0.1  manageStaff.local
 ```
-
+***Nếu không chạy được run local bằng php :***
+```
+cd Direction/path/project
+php -S 127.0.0.1:8000
+```
 
 
 ## Licence
