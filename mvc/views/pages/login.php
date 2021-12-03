@@ -41,7 +41,7 @@
 										<button id="login_submit" class="button dark">
 											<span>Đăng nhập</span>
 											<img src="https://file.hstatic.net/1000187248/file/spinner_6dbec68bd28a42718f17704bf42d58e7.gif" alt="image loading">
-										</button> <span>Bạn chưa có tài khoản?</span><a href="/account/signup">Đăng ký</a>
+										</button> <span>Bạn chưa có tài khoản?</span><a href="/signup">Đăng ký</a>
 									</div>
 								</div>
 							</div>

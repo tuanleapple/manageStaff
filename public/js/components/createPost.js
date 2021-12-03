@@ -8,14 +8,16 @@ $(document).on('change', 'input[name="post-image"]', function (e) {
     var formData = new FormData($('form.form-feature-product')[0]);
     $.ajax({
         type: 'POST',
-        url: '/admin/post/create/image',
+        url: '/createImage',
         data: formData,
+        dataType: "json",
         cache: false,
         contentType: false,
         processData: false,
         success: function (json) {
+            console.log(json)
             if(json.data == 1){
-                $('form.form-feature-product').find('img').attr('src','/upload/post/'+json.name);
+                $('form.form-feature-product').find('img').attr('src','http://127.0.0.1:8080/public/upload/post/'+json.name);
                 $('form.form-feature-product').find('input[name="image"]').val(json.name)
             }else{
                 swal("Hình ảnh ", "Đã có lỗi sảy ra !!", "error");
@@ -34,11 +36,12 @@ $(function(){
 function collection() {
     $.ajax({
         type: "GET",
-        url: "/admin/post/getCollection",
+        url: "/getCollection",
+        dataType: "json",
         // cache: false,
         success: function (data) {
             $('select[name="selectCollection"]').find('option').not(':first').remove();
-            $.each(data, function (index, value) {
+            $.each(data.collection, function (index, value) {
                 $('select[name="selectCollection"]').append('<option value="' + value.id + '">' + value.title + '</option>')
             })
         }
@@ -47,27 +50,48 @@ function collection() {
 
 $(document).on('click','#createPost',function(){
   let data ={};
+  data.id = $(this).attr('data-id')
   data.title = $('input[name="title"]').val();
   data.parent_id = $('select[name="selectCollection"]').val();
-  data.tag = $('input[name="hashtag"]').tagsinput('items');
-  data.image = $('input[name="image"]').val();
   data.content = tinymce.get("contentPost").getContent();
-  $.ajax({
-    type:'post',
-    url:'/admin/post/createPost',
-    data:data,
-    success: function (data) {
-      if (data.data == 1) {
-        swal("Bài Viết", "Thêm Bài Viết Thành Công", "success");
-        setTimeout(function(){
-          window.location.href="http://post.local/admin/post";
-      }, 5000); 
-    } else {
-        swal("Bài Viết", "Đã có lỗi sảy ra !!", "error");
-    }
+  if (data.title.length == 0){
+    swal("Cảnh Báo ", "Vui lòng nhập tiêu đề !!", "error");
   }
-  })
-
+  if(data.id){
+    $.ajax({
+      type:'post',
+      url:'/editPostAdmin',
+      data:data,
+      dataType: "json",
+      success: function (data) {
+        if (data.data == 1) {
+          swal("Bài Viết", "Thêm Bài Viết Thành Công", "success");
+          setTimeout(function(){
+            window.location.href="http://127.0.0.1:8080/post";
+        }, 400); 
+      } else {
+          swal("Bài Viết", "Đã có lỗi sảy ra !!", "error");
+      }
+    }
+    })
+  }else {
+    $.ajax({
+      type:'post',
+      url:'/createPostAdmin',
+      data:data,
+      dataType: "json",
+      success: function (data) {
+        if (data.data == 1) {
+          swal("Bài Viết", "Thêm Bài Viết Thành Công", "success");
+          setTimeout(function(){
+            window.location.href="http://127.0.0.1:8080/post";
+        }, 400); 
+      } else {
+          swal("Bài Viết", "Đã có lỗi sảy ra !!", "error");
+      }
+    }
+    })
+  }
 })
 function initTinymce(selector, height) {
     if ($(selector).length) {
@@ -107,7 +131,7 @@ function initTinymce(selector, height) {
           var csrfToken = $('meta[name="csrf-token"]').attr('content');
           xhr = new XMLHttpRequest();
           xhr.withCredentials = false;
-          xhr.open('POST', '/api/tinymce/uploadImage');
+          xhr.open('POST', '/tinymceUploadImage');
           xhr.setRequestHeader('x-csrf-token', csrfToken); 
           xhr.onload = function() {
             var json;

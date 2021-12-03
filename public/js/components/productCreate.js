@@ -90,15 +90,16 @@ $(document).on('change', 'input[type="file"]', function (e) {
     });
     $.ajax({
         type: 'POST',
-        url: '/admin/product/create/image',
+        url: '/productCreateImage',
         data: formData,
         cache: false,
+        dataType: "json",
         contentType: false,
         processData: false,
         success: function (data) {
             if (data.data == 1) {
                 $.each(data.images, function (index, value) {
-                    $('.image_upload').append('<div class="item" data-getImage="' + value + '"><a class="image_a_upload"><img src="/upload/product/' + value + '" style="padding: 0.25rem;"/></a><i class="fas fa-times item-icon" data-image="' + value + '"></i></div>')
+                    $('.image_upload').append('<div class="item" data-getImage="' + value + '"><a class="image_a_upload"><img src="http://127.0.0.1:8080/public/upload/product/' + value + '" style="padding: 0.25rem;"/></a><i class="fas fa-times item-icon" data-image="' + value + '"></i></div>')
                 })
             }
         },
@@ -111,8 +112,9 @@ $(document).on('click', '.item-icon', function () {
     if (data.image.length != 0) {
         $.ajax({
             type: 'POST',
-            url: '/admin/product/delete/image',
+            url: '/productDeleteImage',
             data: data,
+            dataType: "json",
             cache: false,
             success: function (data) {
                 if (data.data == 1) {
@@ -152,19 +154,21 @@ $(document).on('click', '#createCollectionProduct', async function () {
     data.first_image = images[0];
     data.description = tinymce.get("description").getContent()
     data.gender = $('#selectGender').find(':selected').val();
+    data.price = $('#price').val();
     data.display = $('#checkdisplay:checked').length;
     data.highlight = $('#checkhighlight:checked').length;
     data.meta_title = $('.meta-title').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/product/createProduct',
+        url: '/createProducts',
         data: data,
+        dataType: "json",
         cache: false,
         success: function (data) {
             if (data.data == 1) {
                 swal('create Product', 'Create Product', 'success');
                 setTimeout(function(){
-                    window.location.href="http://post.local/admin/product";
+                    window.location.href="http://127.0.0.1:8080/product";
                 },200); 
             }
         },
@@ -216,6 +220,7 @@ function deleteVariant(e){
     $.ajax({
         type: 'POST',
         url: '/admin/product/deleteVariant/'+e,
+        dataType: "json",
         cache: false,
         success: function (data) {
             if (data.data == 1) {
@@ -254,14 +259,15 @@ $(document).on('click', '#editCollectionProduct',async function () {
     data.meta_title = $('.meta-title').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/product/edit',
+        url: '/editProducts',
         data: data,
+        dataType: "json",
         cache: false,
         success: function (data) {
             if (data.data == 1) {
                 swal('Edit Product', 'Edit Product', 'success');
                 setTimeout(function () {
-                    window.location.href = "http://post.local/admin/product";
+                    window.location.href = "http://127.0.0.1:8080/product";
                 }, 200);
             }
         },

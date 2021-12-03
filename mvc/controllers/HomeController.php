@@ -4,60 +4,186 @@
 
 
 class HomeController extends BaseController {
+    function setCookieClient() {
+        $random = $this->generateRandomString();
+        //30 day
+        $this->model('Cookie_tokenModel')->Cookie_token($random, '', '');
+        setcookie("key_post", $random, time()+31556926);
+    }
 
-        // Must have SayHi()
+    function generateRandomString($length = 15) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
     function SayHi(){
         $type = 'ALL COLLECTION';
         $product = $this->model('productModel')->product();
         $collection = $this->model('collectionModel')->collection();
         $collection_product = $this->model('collectionProductModel')->collectionProduct();
+        $pagination = $this->model('productModel')->pagination($page = 1);
+        $product = $pagination[1];
+        $cart = $this->model('cartModel')->cart();
         $this->view("layout", [
             "Page"=>"main",
             "product"=> $product,
             "collection"=> $collection,
             "collectionProduct"=> $collection_product,
-            "type" => $type 
+            "type" => $type,
+            "cart" => $cart,
+            "pagination" => $pagination[0],
+        ]);
+    }
+    function page($page) {
+        $type = 'ALL COLLECTION';
+        $product = $this->model('productModel')->product();
+        $collection = $this->model('collectionModel')->collection();
+        $collection_product = $this->model('collectionProductModel')->collectionProduct();
+        $pagination = $this->model('productModel')->pagination($page);
+        $product = $pagination[1];
+        $cart = $this->model('cartModel')->cart();
+        $this->view("layout", [
+            "Page"=>"main",
+            "product"=> $product,
+            "collection"=> $collection,
+            "collectionProduct"=> $collection_product,
+            "type" => $type,
+            "cart" => $cart,
+            "pagination" => $pagination[0],
         ]);
     }
     function view404(){
         $this->view("page404", []);
     }
-    function products(){
-        $this->view("layout", [
-            "Page"=>"page",
-            "Number"=> 1,
-            "Mau"=>"red",
-            "SoThich"=>["A", "B", "C"],
-                "SV" => 'testing' 
-        ]);
+    function products($request){
+        if($request) {
+            $type = 'ALL COLLECTION';
+            $collection = $this->model('collectionModel')->collection();
+            $productInfo = $this->model('productModel')->productTitle($request);
+            $productRelated = $this->model('productModel')->productRelated($productInfo[0]['id'], $productInfo[0]['collection_id']);
+            $variant = $this->model('productModel')->variant($productInfo[0]['id']);
+            $productTitle = $productInfo[0]['title'];
+            $cart = $this->model('cartModel')->cart();
+            $this->view("layout", [
+                "Page"=>"page",
+                "collection"=> $collection,
+                "type" => $type,
+                "productInfo" => $productInfo[0],
+                "productRelated" => $productRelated,
+                "variant" => $variant,
+                "productTitle" => $productTitle,
+                "cart" => $cart,
+            ]);
+        }
     }
 
     function carts(){
+        $type = 'carts';
+        $product = $this->model('productModel')->product();
+        $collection = $this->model('collectionModel')->collection();
+        $cart = $this->model('cartModel')->cart();
         $this->view("layout", [
             "Page"=>"cart",
-            "Number"=> 1,
-            "Mau"=>"red",
-            "SoThich"=>["A", "B", "C"],
-                "SV" => 'testing' 
+            "collection"=> $collection,
+            "product"=> $product,
+            "type" => $type,
+            "cart" => $cart,
         ]);
     }
-
+    function addCart(){
+        $this->model('cartModel')->addCart($_POST);
+    }
+    function getCity(){
+        $City = $this->model('productModel')->city();
+        $success = array('data' => '1','city'=> $City);
+        return print_r(json_encode($success));
+    }
+    function qualityPlus(){
+        $id = $_POST['id'];
+        $quality = $_POST['quality'];
+        $this->model('productModel')->qualityPlus($id, $quality);
+        $success = array('data' => '1');
+        return print_r(json_encode($success));
+    }
+    function getDistrict($id) {
+        $District = $this->model('productModel')->district($id);
+        $success = array('data' => '1','district'=> $District);
+        return print_r(json_encode($success));
+    }
+    function getWard($id){
+        $Ward = $this->model('productModel')->ward($id);
+        $success = array('data' => '1','ward'=>$Ward);
+        return print_r(json_encode($success));
+    }
     function checkout(){
-        $this->view("layout", [
+        $cart = $this->model('cartModel')->cart();
+        $total = 0;
+        if(!empty($cart)){
+            foreach($cart as $value){
+                $total = $total + ($value['price'] * $value['quality']);
+            }
+        }
+        $this->view("checkout", [
             "Page"=>"checkout",
-
+            "cart"=> $cart,
+            "total"=> $total,
         ]);
     }
     function login(){
-        $this->view("layout", [
-            "Page"=>"login",
-
-        ]);
+        // if (isset($_COOKIE["user_client"])) {
+        //     $this->account();
+        // }
+            $type = 'Login';
+            $collection = $this->model('collectionModel')->collection();
+            $cart = $this->model('cartModel')->cart();
+            $this->view("layout", [
+                "Page"  =>"login",
+                "type" => $type,
+                "collection" => $collection,
+                "cart" => $cart,
+            ]);
     }
     function signup(){
+        // if (isset($_COOKIE["user_client"])) {
+        //     $this->account();
+        // }
+        $type = 'Sign In';
+        $collection = $this->model('collectionModel')->collection();
+        $cart = $this->model('cartModel')->cart();
         $this->view("layout", [
-            "Page"=>"signup",
+            "Page"  =>"signup",
+            "type" => $type,
+            "collection" => $collection,
+            "cart" => $cart,
         ]);
+    }
+    function checkLoginClient(){
+        $user = $_POST["email"];
+        $pwd = $_POST["password"];
+        $check = $this->model('userAdminModel')->checkLoginClient($user);
+        if (password_verify($pwd, $check[0]['password'])) {
+            setcookie("user_client", $check[0]['id'], time()+31556926);
+            $success = array('data' => '1');
+            return print_r(json_encode($success));
+        }
+    }
+    function account(){
+        if (isset($_COOKIE["user_client"])) {
+            $type = 'User';
+            $collection = $this->model('collectionModel')->collection();
+            $cart = $this->model('cartModel')->cart();
+            $this->view("layout", [
+                "Page"  =>"orderView",
+                "type" => $type,
+                "collection" => $collection,
+                "cart" => $cart,
+            ]);
+        }
+
     }
     
 }

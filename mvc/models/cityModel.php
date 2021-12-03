@@ -8,7 +8,5 @@ class cityModel extends DB{
         $qr = "SELECT * FROM city";
         return $this->conn->query($qr)->fetchAll();
     }
-
-
 }
 ?>

@@ -1,32 +1,18 @@
 <?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use Cookie;
-class Cookie_token extends Model
-{
-    protected $table = 'cookie_token';
-    public $timestamps = false;
-    public static function add($cookie_token,$user_id,$cart_id)
-    {
-        $cookie = new Cookie_token;
-        $cookie->token_id = Str::random(15);
-        if(!empty($user_id)){
-            $cookie->user_id = $user_id;
+require_once $_SERVER['DOCUMENT_ROOT'] .'/mvc/core/DB.php';
+class Cookie_tokenModel extends DB{
+    public function Cookie_token($cookie_token,$user_id,$cart_id){
+        if(!empty($user_id) || !empty($cart_id)){
+            $user_id = $user_id;
+            $cart_id = $cart_id;
+        } else {
+            $user_id = '';
+            $cart_id = '';
         }
-        if(!empty($product_id)){
-            $cookie->cart_id = $cart_id;
-        }
-        $cookie->created_at = date('Y-m-d H:i:s');
-        $cookie->updated_at = date('Y-m-d H:i:s');
-        if($cookie->save()){
-            return $cookie->token_id;
-        }
-        return false;
-       
+        $created_at = date("Y-m-d h:i:s");
+        $qr = "INSERT INTO cookie_token (token_id, user_id, cart_id, created_at, updated_at)
+        VALUES ('$cookie_token', '$user_id', '$cart_id', '$created_at','$created_at')";
+        return $this->conn->query($qr)->fetchAll();
     }
 }
-
+?>

@@ -4,10 +4,12 @@ $(function(){
 function getCity(){
     $.ajax({
         type: "get",
-        url: "/getCity",         
+        url: "/getCity",
+        dataType: "json",     
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         cache: false,
         success: function (data) {
+            console.log(data.data)
             if (data.data == 1) {
                 $('#customer_shipping_province').not(':first').remove()
                 $('#customer_shipping_district').not(':first').remove()
@@ -25,7 +27,8 @@ $(document).on('change','#customer_shipping_province',function(){
     let id = $(this).find('option:selected').val();
     $.ajax({
         type: "get",
-        url: "/getDistrict/"+id,         
+        url: "/getDistrict/"+id,
+        dataType: "json",           
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         cache: false,
         success: function (data) {
@@ -35,8 +38,6 @@ $(document).on('change','#customer_shipping_province',function(){
                 $.each(data.district, function (index, value) {
                     $('#customer_shipping_district').append('<option value="' + value.id + '">' + value.name + '</option>')
                 })
-            } else {
-                alert('Sever Đã có Lỗi !!!');
             }
         }
     })
@@ -45,7 +46,8 @@ $(document).on('change','#customer_shipping_district',function(){
     let id = $(this).find('option:selected').val();
     $.ajax({
         type: "get",
-        url: "/getWard/"+id,         
+        url: "/getWard/"+id,  
+        dataType: "json",         
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         cache: false,
         success: function (data) {

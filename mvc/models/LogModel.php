@@ -6,18 +6,13 @@ class LogModel extends DB{
         $qr = "SELECT log.user_id,log.module,log.message,log.created_at,user_admin.fullname  FROM log INNER JOIN user_admin WHERE log.user_id = user_admin.id ";
         return $this->conn->query($qr)->fetchAll();
     }
-    // public static function add($module,$message, $data)
-    // {
-    //     $sesion = Session::get('user');
-    //     $newLog = new self();
-    //     $newLog->user_id =  $sesion->id;
-    //     $newLog->module = $module;
-    //     $newLog->message = $message;
-    //     $newLog->data = $data;
-    //     $newLog->created_at = date('Y-m-d H:i:s');
-    //     $newLog->updated_at = date('Y-m-d H:i:s');
-    //     $newLog->save();
-    //     return $newLog;
-    // }
+    public function add($module,$message, $data)
+    {
+        $sesion = $_SESSION['user'];
+        $created_at = date("Y-m-d h:i:s");
+        $qr = "INSERT INTO log (user_id, module, message, data,created_at, updated_at)
+        VALUES ('$sesion','$module', '$message', '$data', '$created_at', '$created_at')";
+        return $this->conn->query($qr)->fetchAll();
+    }
 }
 ?>

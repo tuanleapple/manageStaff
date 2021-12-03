@@ -77,14 +77,21 @@ $(document).on('click','#add-to-cart',function(){
           url:'/addCart',
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           data:data,
+          dataType: "json",
           success:async function (data) {
+            console.log(data.cart);
               if (data.data == 1) {
+                if (data.update == 1) {
+                  setTimeout(function(){
+                    window.location.href= window.location.href;
+                  },400);
+                } else {
                   if(data.cart){
-                   await $('.cart-product').prepend('<table id="cart-view" class="table text-center border-table"><tbody><tr class="item_2"><td class="img"><a href="/products/'+data.cart.slug+'" title="/products/'+data.cart.slug+'"><img src="/upload/product/'+data.cart.image+'" alt="/products/'+data.cart.slug+'"></a></td><td class="table-product-p"><a class="pro-title-view" href="/products/'+data.cart.slug+'" title="/products/'+data.cart.slug+'}">'+data.cart.title+'</a><span class="variant">'+data.cart.size+'</span>	<span class="pro-quantity-view">'+data.cart.quality+'</span><span class="pro-price-view" data-price="'+data.cart.price+'">'+number_format(data.cart.price,0,'',',')+'<u class="format_d">đ</u></span><span class="remove_link remove-cart"><a onclick="deleteCart('+data.cart.id+')" ><i class="fa fa-times"></i></a></span></td></tr></tbody></table>')
+                    await $('.cart-product').prepend('<table id="cart-view" class="table text-center border-table"><tbody><tr class="item_2"><td class="img"><a href="/products/'+data.cart.slug+'" title="/products/'+data.cart.slug+'"><img src="http://127.0.0.1:8080/public/upload/product/'+data.cart.image+'" alt="/products/'+data.cart.slug+'"></a></td><td class="table-product-p"><a class="pro-title-view" href="/products/'+data.cart.slug+'" title="/products/'+data.cart.slug+'}">'+data.cart.title+'</a><span class="variant">'+data.cart.size+'</span>	<span class="pro-quantity-view">'+data.cart.quality+'</span><span class="pro-price-view" data-price="'+data.cart.price+'">'+number_format(data.cart.price,0,'',',')+'<u class="format_d">đ</u></span><span class="remove_link remove-cart"><a onclick="deleteCart('+data.cart.id+')" ><i class="fa fa-times"></i></a></span></td></tr></tbody></table>')
                     openpopup(2)
                     totalPrice();
                   }
-                 
+                }
               }else{
                 alert('Dã có lỗi xảy ra !!!');
               }
@@ -95,11 +102,13 @@ $(document).on('click','#add-to-cart',function(){
 
 function deleteCart(e){
   let data = {};
-  data.cart = e;
-  if(data.cart){
+  data.id = e;
+  data.type = 'cart';
+  if(data.id){
     $.ajax({
       type:'POST',
-      url:'/deleteCart',
+      url:'/delete',
+      dataType: "json",
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
       data:data,
       success:async function (data) {

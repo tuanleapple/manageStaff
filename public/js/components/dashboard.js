@@ -27,3 +27,42 @@ $(document).on('click','.menu-hidden',async function(){
     await $('.menu-hidden').addClass('menu-click');
     $('.menu-click').removeClass('menu-hidden')
 })
+
+$(document).on('click','.icon-table-delete',function(){
+    let data = {};
+    data.id = $(this).attr('data-id');
+    data.type = $(this).attr('data-type');
+    data.title = $(this).attr('data-title');
+    let title = $(this).attr('data-title');
+    if (data.id) {
+        swal({
+            title: "Cảnh Báo",
+            text: "Bạn có chắc muốn xoá "  + data.title + " này không ??",
+            icon: "warning",
+            dangerMode: true,
+            buttons: {
+                cancel: "Cancel",
+                ok: "OK"
+            },
+        }).then(function (isConfirm) {
+            if (!isConfirm) return;
+            $.ajax({
+                url: '/delete',
+                type: "post",
+                data:data,
+                dataType: "json",
+            }).done(function (data) {
+                if (data.data == 1) {
+                    swal("Danh Mục", "Xoá "+ title +" Thành Công", "success");
+                    setTimeout(function(){
+                        window.location.href= window.location.href;
+                      },400); 
+
+                } else {
+                    swal("Danh Mục", "Đã có lỗi sảy ra !!", "error");
+                }
+
+            });
+        });
+    }
+})

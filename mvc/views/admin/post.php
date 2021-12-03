@@ -11,22 +11,32 @@
                 Danh Sách Bài Viết
             </div>
             <div class="card-header-right"><button class="btn btn-block btn-primary active" id="createPost"
-                    type="button" aria-pressed="true"><li style="list-style: none"><a style="color:#fff;text-decoration:none;font-size: 11px;" href="/admin/createPost">Tạo Bài Viết </a></li></button></div>
+                    type="button" aria-pressed="true"><li style="list-style: none"><a style="color:#fff;text-decoration:none;font-size: 11px;" href="/createPost">Tạo Bài Viết </a></li></button></div>
         </div>
         <div class="card-body">
             <table id="tablePost" class="table table-resposive table-striped table-bordered text-center">
             <thead class="thead-dark">
                 <tr class="table-primary">
                     <th></th>
-                    <th>Hình ảnh</th>
                     <th>Tiêu đề</th>
                     <th>Danh Mục</th>
-                    <th>Tác Giả</th>
                     <th>Ngày Xuất Bản</th>
                     <th>Chức Năng</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <?php foreach($data['post'] as $key => $value) :?>
+                    <tr>
+                        <td><?= $key+1?></td>
+                        <td><?= $value['title'] ?></td>
+                        <td><?= $value['collectionTitle'] ?></td>
+                        <td><?= $value['created_at'] ?></td>
+                        <td><a href="/editPost/<?= $value['id'] ?>"><i class="fas fa-edit icon-table-edit"></i></a>
+                        <i class="fas fa-trash-alt icon-table-delete" data-id="<?= $value['id'] ?>" data-title="<?= $value['title']?>" data-type="post"></i>
+                    </td>
+                    </tr>
+                <?php endforeach;?>
+            </tbody>
         </table>
         </div>
     </div>

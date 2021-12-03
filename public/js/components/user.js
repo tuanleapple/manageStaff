@@ -3,8 +3,8 @@ $(document).ready(function(){
         width: '100%'
     });
   $('#selectUserEdit').select2({
-                        width: '100%'
-                    });
+        width: '100%'
+    });
 })
 
 $(document).on('click','.openModelUser',function(){
@@ -35,15 +35,16 @@ $(document).on('click','#saveModalUser',function(){
     }
     $.ajax({
         type: "POST",
-        url: "/admin/createUser",
+        url: "/createUser",
         data: data,
+        dataType: "json",
         cache: false,
         success: function (data) {
             if (data.data == 1) {
                 $('#UserModal').modal('hide');
-                swal("User", "creaet user success", "success");
+                swal("User", "create user success", "success");
                 setTimeout(function(){
-                    window.location.href="http://post.local/admin/user";
+                    window.location.href="http://127.0.0.1:8080/users";
                 });
 
             } else {
@@ -59,7 +60,7 @@ $(document).on('click','#saveModalUserEdit',function(){
     data.password = $('#passwordEdit').val();
     data.email = $('#emailEdit').val();
     data.role = $('#selectUserEdit').find('option:selected').val();
-    if(data.username.length == 0 || data.password.length == 0 || data.email.length == 0 || data.role == -2){
+    if(data.username.length == 0 || data.email.length == 0 || data.role == -2){
         return swal({
             title: "warning!",
             text: "please write full info!",
@@ -69,15 +70,16 @@ $(document).on('click','#saveModalUserEdit',function(){
     }
     $.ajax({
         type: "POST",
-        url: "/admin/user/edit",
+        url: "/editUser",
         data: data,
+        dataType: "json",
         cache: false,
         success: function (data) {
             if (data.data == 1) {
                 $('#UserModalEdit').modal('hide');
                 swal("User", "edit user success", "success");
                 setTimeout(function(){
-                    window.location.href="http://post.local/admin/user";
+                    window.location.href="http://127.0.0.1:8080/users";
                 });
             } else {
                 swal("User", "edit user error!!", "error");
@@ -86,12 +88,15 @@ $(document).on('click','#saveModalUserEdit',function(){
     })
 })
 $(document).on('click','.editUser',function(){
-    id = $(this).attr('data-id');
-    if(id){
+    let data = {};
+    data.id = $(this).attr('data-id');
+    if(data.id){
         $.ajax({
             type: "POST",
-            url: "/admin/user/edit/"+id,
+            url: "/findUser",
             cache: false,
+            data:data,
+            dataType: "json",
             success: async function(data) {
                 if (data.data == 1) {
                      $('#usernameEdit').val(data.user.fullname);
@@ -105,38 +110,5 @@ $(document).on('click','.editUser',function(){
                 }
             }
         })
-    }
-})
-$(document).on('click', '.icon-table-delete', function () {
-    let id = $(this).attr('data-id');
-    let title = $(this).attr('data-title');
-    if (id) {
-        swal({
-            title: "Cảnh Báo",
-            text: "Bạn có chắc muốn xoá danh mục " + title + " này không ??",
-            icon: "warning",
-            dangerMode: true,
-            buttons: {
-                cancel: "Cancel",
-                ok: "OK"
-            },
-        }).then(function (isConfirm) {
-            if (!isConfirm) return;
-            $.ajax({
-                url: '/admin/user/delete/' + id,
-                type: "DELETE",
-            }).done(function (data) {
-                if (data.data == 1) {
-                    $('#UserModalEdit').modal('hide');
-                    swal("User", "Xoá User Thành Công", "success");
-                    setTimeout(function(){
-                        window.location.href="http://post.local/admin/user";
-                    });
-                } else {
-                    swal("User", "edit user error!!", "error");
-                }
-
-            });
-        });
     }
 })

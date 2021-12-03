@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-  totalPrice();
+    totalPrice();
     $('.minus').click(function () {
       var $input = $(this).parent().find('input');
       var count = parseInt($input.val()) - 1;
@@ -24,11 +24,13 @@ function checkTotalPrice(qualyti,price,input,id){
     input.parent().parent().find('.price span.line-item-total').attr('data-totalprice',parseInt(price)* parseInt(qualyti))
     totalPrice();
     let data ={};
+    data.id = id;
     data.quality = qualyti;
      $.ajax({
       type: "POST",
-      url: "/qualityPlus/"+id,
-      data: data,          
+      url: "/qualityPlus",
+      data: data,
+      dataType: "json",        
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
       cache: false,
   })
@@ -36,20 +38,22 @@ function checkTotalPrice(qualyti,price,input,id){
 }
 function totalPrice(){
   let lengthTable = $('table.table-cart').length;
-  console.log(lengthTable);
   let total = 0;
   for(let i = 0;i<lengthTable;i++){
     total = total + parseInt($('table.table-cart tbody tr.line-item-container td.item .price .line-item-total').eq(i).attr('data-totalprice'));
   }
+  console.log(total)
   $('.total_price b').html(number_format(total,0,'',','))
 }
 function deleteCart(e){
   let data = {};
-  data.cart = e;
-  if(data.cart){
+  data.id = e;
+  data.type = 'cart'
+  if(data.id){
     $.ajax({
       type:'POST',
-      url:'/deleteCart',
+      url:'/delete',
+      dataType: "json",
       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
       data:data,
       success:async function (data) {

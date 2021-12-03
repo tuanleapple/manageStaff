@@ -15,7 +15,8 @@ $(document).on('click', '#createCollection', async function () {
 function collection() {
     $.ajax({
         type: "POST",
-        url: "/admin/collection/getCollection",
+        url: "/getCollection",
+        dataType: "json",
         cache: false,
         success: function (data) {
             $('select[name="selectCollection"]').find('option').not(':first').remove();
@@ -44,17 +45,17 @@ $(document).on('click', '#saveModalCollection', function () {
     }
     if (data.id == null || data.id == undefined) {
         $.ajax({
-
             type: "POST",
-            url: "/admin/collection/createCollection",
+            url: "/createCollection",
             data: data,
+            dataType: "json",
             cache: false,
             success: function (data) {
                 if (data.data == 1) {
                     $('#collectionModal').modal('hide');
                     swal("Danh Mục", "Thêm Danh Muc Thành Công", "success");
                     setTimeout(function(){
-                        window.location.href="http://post.local/admin/collection";
+                        window.location.href="http://127.0.0.1:8080/collection";
                       },400); 
                 } else {
                     swal("Danh Mục", "Đã có lỗi sảy ra !!", "error");
@@ -64,15 +65,16 @@ $(document).on('click', '#saveModalCollection', function () {
     } else {
         $.ajax({
             type: "POST",
-            url: "/admin/collection/editCollection",
+            url: "/editCollection",
             data: data,
+            dataType: "json",
             cache: false,
             success: function (data) {
                 if (data.data == 1) {
                     $('#collectionModal').modal('hide');
                     swal("Danh Mục", "Chỉnh sửa Danh Muc Thành Công", "success");
                     setTimeout(function(){
-                        window.location.href="http://post.local/admin/collection";
+                        window.location.href="http://127.0.0.1:8080/collection";
                       },400); 
                 } else {
                     swal("Danh Mục", "Đã có lỗi sảy ra !!", "error");
@@ -96,44 +98,45 @@ $(document).on('click', '.icon-table-edit', async function () {
     }
     $('#titleCollection').val(title);
     $('#desCollection').val(des);
-    await getParentCollection(id, parent);
+    // await getParentCollection(id, parent);
     $('#saveModalCollection').attr('data-checkid', id)
     $('#collectionModal').modal('show');
 })
-$(document).on('click', '.icon-table-delete', function () {
-    let id = $(this).attr('data-id');
-    let title = $(this).attr('data-title');
-    if (id) {
-        swal({
-            title: "Cảnh Báo",
-            text: "Bạn có chắc muốn xoá collection " + title + " này không ??",
-            icon: "warning",
-            dangerMode: true,
-            buttons: {
-                cancel: "Cancel",
-                ok: "OK"
-            },
-        }).then(function (isConfirm) {
-            if (!isConfirm) return;
-            $.ajax({
-                url: '/admin/collection/delete/' + id,
-                type: "DELETE",
-            }).done(function (data) {
-                if (data.data == 1) {
-                    $('#collectionModal').modal('hide');
-                    swal("Danh Mục", "Xoá Danh Muc Thành Công", "success");
-                    setTimeout(function(){
-                        window.location.href="http://post.local/admin/collection";
-                      },400); 
+// $(document).on('click', '.icon-table-delete', function () {
+//     let id = $(this).attr('data-id');
+//     let title = $(this).attr('data-title');
+//     if (id) {
+//         swal({
+//             title: "Cảnh Báo",
+//             text: "Bạn có chắc muốn xoá collection " + title + " này không ??",
+//             icon: "warning",
+//             dangerMode: true,
+//             buttons: {
+//                 cancel: "Cancel",
+//                 ok: "OK"
+//             },
+//         }).then(function (isConfirm) {
+//             if (!isConfirm) return;
+//             $.ajax({
+//                 url: '/admin/collection/delete/' + id,
+//                 type: "DELETE",
+//                 dataType: "json",
+//             }).done(function (data) {
+//                 if (data.data == 1) {
+//                     $('#collectionModal').modal('hide');
+//                     swal("Danh Mục", "Xoá Danh Muc Thành Công", "success");
+//                     setTimeout(function(){
+//                         window.location.href="http://post.local/admin/collection";
+//                       },400); 
 
-                } else {
-                    swal("Danh Mục", "Đã có lỗi sảy ra !!", "error");
-                }
+//                 } else {
+//                     swal("Danh Mục", "Đã có lỗi sảy ra !!", "error");
+//                 }
 
-            });
-        });
-    }
-})
+//             });
+//         });
+//     }
+// })
 
 
 async function getParentCollection(id, parent) {
@@ -144,6 +147,7 @@ async function getParentCollection(id, parent) {
         type: "POST",
         url: "/admin/collection/getParentCollection/" + data.id,
         data: data,
+        dataType: "json",
         cache: false,
         success: function (data) {
             console.log(data)

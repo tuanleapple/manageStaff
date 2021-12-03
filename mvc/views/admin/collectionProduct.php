@@ -13,7 +13,7 @@
             </div>
             <div class="card-header-right"><button class="btn btn-block btn-primary active" id="createCollection"
                     type="button" aria-pressed="true">
-                    <li style="list-style: none"><a href="/collectionProduct/create" style="color:#fff;text-decoration:none" >Tạo Danh Mục </a></li>
+                    <li style="list-style: none"><a href="/createCollectionProduct" style="color:#fff;text-decoration:none" >Tạo Danh Mục </a></li>
                     </button></div>
         </div>
         <div class="card-body">
@@ -32,8 +32,8 @@
                     <th scope="row"><?=  $key+1 ?></th>
                     <td><?= $value['title'] ?></td>
                     <td><?=$value['slug']?></td>
-                    <td><a href="/admin/collectionProduct/edit/<?=$value['id']?>"><i class="fas fa-edit icon-table-edit"></i></a>
-                        <i class="fas fa-trash-alt icon-table-delete" data-id="<?=$value['id']?>" data-title="<?=$value['title']?>"></i>
+                    <td><a href="/editCollectionProduct/<?=$value['id']?>"><i class="fas fa-edit icon-table-edit"></i></a>
+                        <i class="fas fa-trash-alt icon-table-delete" data-id="<?=$value['id']?>" data-title="<?= $value['title']?>" data-type="collectionProduct"></i>
                     </td>
                 </tr>
                 <?php endforeach;?>

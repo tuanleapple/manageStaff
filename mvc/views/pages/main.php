@@ -40,4 +40,4 @@
     </div>
     <?php endforeach; ?>
 </div>
-<!-- <div class="product_link">{{$product->links("vendor.pagination.default")}}</div> -->
+<div class="product_link"><?= $data["pagination"] ?></div>

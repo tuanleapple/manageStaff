@@ -26,8 +26,7 @@
                         <div class="order-summary-sections">
                             <div class="order-summary-section order-summary-section-product-list"
                                 data-order-summary-section="line-items">
-                                @if($cart)
-                                    @foreach ($cart as $value)
+                                <?php foreach ($data['cart'] as $value):?>
                                         <table class="product-table">
                                             <thead>
                                                 <tr>
@@ -38,31 +37,30 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="product" data-product="{{$value['product_id']}}" data-cart="{{$value['id']}}">
+                                                <tr class="product" data-product="<?= $value['product_id']?>" data-cart="<?= $value['id']?>">
                                                     <td class="product-image">
                                                         <div class="product-thumbnail">
                                                             <div class="product-thumbnail-wrapper">
                                                                 <img class="product-thumbnail-image" alt="{{$value['title']}}"
-                                                                    src="/upload/product/{{$value['image']}}" alt="/products/{{$value['slug']}}">
+                                                                    src="http://127.0.0.1:8080/public/upload/product/<?= $value['image']?>" alt="/products/<?= $value['slug']?>">
                                                             </div>
-                                                            <span class="product-thumbnail-quantity" aria-hidden="true">{{$value['quality']}}</span>
+                                                            <span class="product-thumbnail-quantity" aria-hidden="true"><?= $value['quality']?></span>
                                                         </div>
                                                     </td>
                                                     <td class="product-description">
-                                                        <span class="product-description-name order-summary-emphasis">{{$value['title']}}</span>
+                                                        <span class="product-description-name order-summary-emphasis"><?= $value['title']?></span>
                                                         <span class="product-description-variant order-summary-small-text">
-                                                            {{$value['size']}}
+                                                            <?= $value['size']?>
                                                         </span>
                                                     </td>
-                                                    <td class="product-quantity visually-hidden">{{$value['quality']}}</td>
+                                                    <td class="product-quantity visually-hidden"><?= $value['quality']?></td>
                                                     <td class="product-price">
-                                                        <span class="order-summary-emphasis">{{number_format($value['price'],0,'',',')}}</span><u>đ</u>
+                                                        <span class="order-summary-emphasis"><?= number_format($value['price'],0,'',',')?></span><u>đ</u>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    @endforeach
-                                @endif
+                                    <?php endforeach;?>
                             </div>
                             <div class="order-summary-section order-summary-section-discount"
                                 data-order-summary-section="discount">
@@ -98,7 +96,7 @@
                                     </div>
                                     <div class="redeem-login-btn">
                                         <a
-                                            href="/loginClient">Đăng
+                                            href="/login">Đăng
                                             nhập</a>
                                     </div>
                                 </div>
@@ -118,7 +116,7 @@
                                             <td class="total-line-price">
                                                 <span class="order-summary-emphasis"
                                                 data-checkout-subtotal-price-target={{$total}}>
-                                                {{number_format($total,0,'',',')}}
+                                                <?= number_format($data['total'],0,'',',')?>
                                                 </span><u>đ</u>
                                             </td>
                                         </tr>
@@ -140,8 +138,8 @@
                                             <td class="total-line-name payment-due">
                                                 <span class="payment-due-currency">VND</span>
                                                 <span class="payment-due-price"
-                                                    data-checkout-payment-due-target="{{$total}}">
-                                                    {{number_format($total,0,'',',')}}
+                                                    data-checkout-payment-due-target="<?= $data['total']?>">
+                                                    <?= number_format($data['total'],0,'',',')?>
                                                 </span><u>đ</u>
                                             </td>
                                         </tr>
@@ -191,7 +189,7 @@
                                     <p class="section-content-text">
                                         Bạn đã có tài khoản?
                                         <a
-                                            href="/loginClient">Đăng
+                                            href="/login">Đăng
                                             nhập</a>
                                     </p>
                                     <div class="fieldset">
@@ -199,34 +197,19 @@
                                             <div class="field-input-wrapper">
                                                 <label class="field-label" for="billing_address_full_name">Họ và
                                                     tên</label>
-                                                @if(!empty($address))
-                                                    <input placeholder="Họ và tên" autocapitalize="off" spellcheck="false"
-                                                    class="field-input" size="30" type="text"
-                                                    id="billing_address_full_name" name="billing_address[full_name]"
-                                                    value="{{$address[0]['fname']}} {{$address[0]['lname']}}">
-                                                @else
                                                     <input placeholder="Họ và tên" autocapitalize="off" spellcheck="false"
                                                     class="field-input" size="30" type="text"
                                                     id="billing_address_full_name" name="billing_address[full_name]"
                                                     value="">
-                                                @endif
-                                                
                                             </div>
 
                                         </div>
                                         <div class="field field-required field-two-thirds  ">
                                             <div class="field-input-wrapper">
                                                 <label class="field-label" for="checkout_user_email">Email</label>
-                                                @if(!empty($checkUser))
                                                     <input placeholder="Email" autocapitalize="off" spellcheck="false"
                                                     class="field-input" type="email" id="checkout_user_email"
-                                                    value="{{$checkUser[0]['email']}}">
-                                                @else
-                                                    <input placeholder="Email" autocapitalize="off" spellcheck="false"
-                                                    class="field-input" type="email" id="checkout_user_email"
-                                                    value="">
-                                                @endif
-                                               
+                                                    value="">     
                                             </div>
 
                                         </div>
@@ -234,18 +217,10 @@
                                             <div class="field-input-wrapper">
                                                 <label class="field-label" for="billing_address_phone">Số điện
                                                     thoại</label>
-                                                    @if(!empty($address))
-                                                        <input placeholder="Số điện thoại" autocapitalize="off"
-                                                        spellcheck="false" class="field-input"
-                                                        type="tel" id="billing_address_phone" name="billing_address[phone]"
-                                                        value="{{$address[0]['tax']}}">
-                                                    @else
-                                                            <input placeholder="Số điện thoại" autocapitalize="off"
-                                                            spellcheck="false" class="field-input" id="billing_address_phone"
-                                                            type="tel" id="billing_address_phone" name="billing_address[phone]"
-                                                            value="">
-                                                    @endif
-                                               
+                                                    <input placeholder="Số điện thoại" autocapitalize="off"
+                                                    spellcheck="false" class="field-input" id="billing_address_phone"
+                                                    type="tel" id="billing_address_phone" name="billing_address[phone]"
+                                                    value="">
                                             </div>
 
                                         </div>
@@ -253,33 +228,25 @@
                                             <div class="field-input-wrapper">
                                                 <label class="field-label" for="billing_address_address1">Địa
                                                     chỉ</label>
-                                                @if(!empty($address))
                                                     <input placeholder="Địa chỉ" autocapitalize="off" spellcheck="false"
                                                     class="field-input" size="30" type="text"
                                                     id="billing_address_address1" name="billing_address[address1]"
-                                                    value="{{$address[0]['info']}}">
-                                                @else
-                                                    <input placeholder="Địa chỉ" autocapitalize="off" spellcheck="false"
-                                                    class="field-input" size="30" type="text"
-                                                    id="billing_address_address1" name="billing_address[address1]"
-                                                    value="">
-                                                @endif
-                                              
+                                                    value="">                    
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="section-content">
                                     <div class="fieldset">
-                                        {{-- <form id="form_update_location" class="clearfix order-checkout__loading"
-                                            accept-charset="UTF-8" method="post"> --}}
-                                            {{-- <input name="selected_customer_shipping_province" type="hidden" value="">
+                                        <form id="form_update_location" class="clearfix order-checkout__loading"
+                                            accept-charset="UTF-8" method="post">
+                                            <input name="selected_customer_shipping_province" type="hidden" value="">
                                             <input name="selected_customer_shipping_district" type="hidden" value="">
                                             <input name="selected_customer_shipping_ward" type="hidden" value="">
                                             <input name="utf8" type="hidden" value="✓">
                                             <div class="order-checkout__loading--box">
                                                 <div class="order-checkout__loading--circle"></div>
-                                            </div> --}}
+                                            </div>
                                             <div class="field field-half  field-show-floating-label">
                                                 <div class="field-input-wrapper field-input-wrapper-select">
                                                     <label class="field-label" for="customer_shipping_country">Quốc
@@ -325,7 +292,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        {{-- </form> --}}
+                                        </form>
                                     </div>
                                     <div class="section-content section-customer-information fieldset"
                                         id="div_country_not_vietnam" style="display: none;">
@@ -354,13 +321,13 @@
                             </div>
                         </div>
                         <div class="step-footer">
-                            {{-- <form id="form_next_step" accept-charset="UTF-8" method="post"> --}}
+                            <form id="form_next_step" accept-charset="UTF-8" method="post">
                                 <input name="utf8" type="hidden" value="✓">
                                 <button class="step-footer-continue-btn btn">
                                     <span class="btn-content">Thanh toán</span>
                                     <i class="btn-spinner icon icon-button-spinner"></i>
                                 </button>
-                            {{-- </form> --}}
+                            </form> 
                             <a class="step-footer-previous-link" href="/cart">
                                 <svg class="previous-link-icon icon-chevron icon" xmlns="http://www.w3.org/2000/svg"
                                     width="6.7" height="11.3" viewBox="0 0 6.7 11.3">

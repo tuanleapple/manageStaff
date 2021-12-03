@@ -11,15 +11,16 @@ $(document).on('click','#login_submit',function(){
     $('#login_submit img').css('display','block');
     $.ajax({
         type: "POST",
-        url: "/account/checkLoginClient",
-        data: data,          
+        url: "/checkLoginClient",
+        data: data,
+        dataType: "json",          
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         cache: false,
         success: function (data) {
             if (data.data == 1) {
                 $('#login_submit img').css('display','none');
                 setTimeout(function(){
-                    window.location.href="http://post.local/account/view=account_info.smb";
+                    window.location.href="http://127.0.0.1:8080/account";
                   },400); 
             } else {
                 alert('Sever Đã có Lỗi !!!');

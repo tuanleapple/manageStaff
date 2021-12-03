@@ -19,7 +19,7 @@
                 </button>
                 <button class="btn btn-block btn-primary active" type="button"
                     aria-pressed="true">
-                    <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/admin/product">Huỷ</a></li>
+                    <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/product">Huỷ</a></li>
                 </button>
             </div>
         </div>
@@ -35,23 +35,22 @@
                 <div class="col-sm-10">
                     <select id="selectCollection" name="selectCollection">
                         <option value="-1" checked>Please choose parent collecion ...</option>
-                        @foreach($collectionProduct as $key => $value)
-                        <option value={{$value['id']}}>{{$value['title']}}</option>
-                        @endforeach
+                        <?php foreach($data['collectionProduct'] as $key => $value) :?>
+                        <option value="<?=$value['id']?>"><?=$value['title']?></option>
+                        <?php endforeach;?>
                     </select>
                 </div>
             </div>
-              <div class="form-group row m-g-1">
+            <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Image<span></label>
-                <div class="col-sm-10">
-                    <form class="form-feature-product" enctype="multipart/form-data">
-                        @csrf
-                        <input class="form-control" type="file" name="images[]" multiple/>
-                    </form>
-                    <div class="image_upload">
+                    <div class="col-sm-10">
+                        <form class="form-feature-product" enctype="multipart/form-data">
+                            <input class="form-control" type="file" name="images[]" multiple/>
+                        </form>
+                        <div class="image_upload">
+                        </div>
                     </div>
                 </div>
-              </div>
               <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Description</label>
                 <div class="col-sm-10">
@@ -63,9 +62,9 @@
                 <div class="col-sm-10">
                     <select id="selectGender" name="selectGender">
                         <option value="-1" checked>Please choose gender ...</option>
-                        @foreach($gender as $key => $value)
-                        <option value={{$value['id']}}>{{$value['title']}}</option>
-                        @endforeach
+                        <?php foreach($data['gender'] as $key => $value) :?>
+                        <option value="<?= $value['id']?>"><?=$value['title']?></option>
+                        <?php endforeach;?>
                     </select>
                 </div>
         
@@ -75,9 +74,9 @@
                 <div class="col-sm-9">
                     <select id="selectSize" name="selectSize">
                         <option value="-1" checked>Please choose size ...</option>
-                        @foreach($size as $key => $value)
-                        <option value={{$value['id']}} data-size="{{$value['title']}}">{{$value['title']}}</option>
-                        @endforeach
+                        <?php foreach($data['size'] as $key => $value) :?>
+                        <option value="<?=$value['id']?>" data-size="<?=$value['title']?>"><?=$value['title']?></option>
+                        <?php endforeach;?>
                     </select>
                 </div>
                 <div class="col-sm-1"><button type="button" class="btn btn-block btn-dart " id="plus-size" type="button" aria-pressed="true"><i class="fas fa-plus"></i></button></div>
@@ -123,7 +122,7 @@
                     </button>
                     <button class="btn btn-block btn-primary active" type="button"
                         aria-pressed="true">
-                        <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/admin/product">Huỷ</a></li>
+                        <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/product">Huỷ</a></li>
                     </button>
                 </div>
               </div>

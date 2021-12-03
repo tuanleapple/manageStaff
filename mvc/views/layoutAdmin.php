@@ -19,14 +19,14 @@
     </script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="./public/css/login.css" type="text/css">
+    <link rel="stylesheet" href="http://127.0.0.1:8080/public/css/login.css" type="text/css">
     <script src="https://kit.fontawesome.com/d5c2bf0a7a.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous"></script>
     <script src='https://cdn.tiny.cloud/1/jbj33yr8pu29zao4xcpea8ejwxklfygv87xouuthxl8ops5e/tinymce/5/tinymce.min.js'
         referrerpolicy="origin"></script>
-    <script type="text/javascript" src="./public/js/components/dashboard.js"></script>
+    <script type="text/javascript" src="http://127.0.0.1:8080/public/js/components/dashboard.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
@@ -40,7 +40,7 @@
     <header id="page-topbar">
         <div class="header">
             <div class="header-left">
-                <a href="#" class="logo-header"><img src="./public/upload/admin/logo.png" alt="">
+                <a href="#" class="logo-header"><img src="http://127.0.0.1:8080/public/upload/admin/logo.png" alt="">
                     <p class="title-hearder">DEVIL</p>
                 </a>
             </div>
@@ -74,7 +74,7 @@
         <div class="nav-left">
             <div class="menu-left">
                     <li class="menu-item">
-                        <a href="/admin/user"><span><i class="fas fa-user-plus item"></i></span><span class="title_nav_left">User</span></a>
+                        <a href="/users"><span><i class="fas fa-user-plus item"></i></span><span class="title_nav_left">User</span></a>
                     </li> 
                     <li class="menu-item">
                         <a href="/collection"><span><i class="fas fa-ethernet"></span></i><span class="title_nav_left">Menu</span></a>
@@ -89,10 +89,10 @@
                         <a href="/product"><span><i class="fas fa-dolly-flatbed"></i></span><span class="title_nav_left">Product</span></a>
                     </li>
                     <li class="menu-item">
-                        <a href="/admin/log"><span><i class="fas fa-clock item"></i></span><span class="title_nav_left">History</span></a>
+                        <a href="/log"><span><i class="fas fa-clock item"></i></span><span class="title_nav_left">History</span></a>
                     </li>
                     <li class="menu-item">
-                        <a href="/admin/billLog"><span><i class="fas fa-wallet"></i></span><span class="title_nav_left">Bill Log</span></a>
+                        <a href="billLog"><span><i class="fas fa-wallet"></i></span><span class="title_nav_left">Bill Log</span></a>
                     </li>
                    
             </div>

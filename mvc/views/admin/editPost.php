@@ -15,13 +15,13 @@
                 Tạo Bài Viết
             </div>
             <div class="card-header-right-item">
-                <button class="btn btn-block btn-primary active" id="createPost" type="button"
+                <button class="btn btn-block btn-primary active" id="createPost" type="button" data-id="<?= $data['post']['id'] ?>" 
                     aria-pressed="true">
                     <li style="list-style: none"><a style="color:#fff;text-decoration:none" >Tạo Bài Viết </a></li>
                 </button>
                 <button class="btn btn-block btn-primary active" type="button"
                     aria-pressed="true">
-                    <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/admin/post">Huỷ</a></li>
+                    <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/post">Huỷ</a></li>
                 </button>
             </div>
         </div>
@@ -29,7 +29,7 @@
             <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Tiêu Đề<span><strong style="color:red"> *</strong></span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Tên Bài Viết" name="title">
+                    <input type="text" class="form-control" placeholder="Tên Bài Viết" name="title" value="<?= $data['post']['title'] ?>">
                 </div>
               </div>
               <div class="form-group row m-g-1">
@@ -43,7 +43,7 @@
               <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Nội Dung<span><strong style="color:red"> *</strong></span></label>
                 <div class="col-sm-10">
-                    <textarea type="text" id="contentPost" class="form-control" rows="6" cols="50"></textarea>
+                    <textarea type="text" id="contentPost" class="form-control" value="<?= $data['post']['content'] ?>" rows="6" cols="50"><?= $data['post']['content'] ?></textarea>
                 </div>
               </div>
              

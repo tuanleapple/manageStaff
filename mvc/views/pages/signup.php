@@ -82,24 +82,10 @@
 										<span>Đăng ký</span>
 										<img src="https://file.hstatic.net/1000187248/file/spinner_6dbec68bd28a42718f17704bf42d58e7.gif" alt="image loading">
 									</button>
-									<span>Bạn đã có tài khoản?</span><a href="/loginClient">Đăng nhập</a>
+									<span>Bạn đã có tài khoản?</span><a href="/login">Đăng nhập</a>
 								</div>
 							</div>
 						</div>
-						{{-- <div class="register_col">
-							<div class="register_main">
-								<div class="login_main_fire">
-									<a id="login_via_fb" href="#" class="login_fire">
-										<img src="https://static.smb.foolab.tech/images/471579c6eb194f569e0d38d3eab5e382.jpg" alt="loign facebook">
-										<span>Facebook</span>
-									</a>
-									<a id="login_via_gg" href="#" class="login_fire">
-										<img src="https://file.hstatic.net/1000187248/file/icon_google_389d33cd8f004048a6a562f04b2de83f.png" alt="login google">
-										<span>google</span>
-									</a>
-								</div>
-							</div>
-						</div> --}}
 					</div>
 				</div>			
 			</div>

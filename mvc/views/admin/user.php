@@ -28,29 +28,28 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($user as $key => $value)
+                <?php foreach($data['users'] as $key => $value) : ?>
                     <tr>
-                        <th scope="row">{{$key+1}}</th>
-                        <td>{{$value['fullname']}}</td>
-                        <td>{{$value['email']}}</td>
-                        @if($value['role'] == -1)
+                        <th scope="row"><?= $key+1 ?></th>
+                        <td><?= $value['fullname'] ?></td>
+                        <td><?= $value['email'] ?></td>
+                        <?php  if($value['role'] == -1) :?>
                             <td>Customer</td>
-                        @elseif ($value['role'] == 0)
+                        <?php  elseif($value['role'] == 0) :?>
                             <td>Staff</td>
-                        @else
+                        <?php else:?>
                             <td>Admin</td>
-                        @endif
-                        <td>{{$value['created_at']}}</td>
-                        <td><a class="editUser" data-id={{$value['id']}}><i class="fas fa-edit icon-table-edit"></i></a>
-                            <i class="fa fa-universal-access" data-id="{{$value['id']}}" style="color: Dodgerblue"></i>
-                            <i class="fas fa-trash-alt icon-table-delete" data-id="{{$value['id']}}" data-title="{{$value['fullname']}}"></i>
+                        <?php endif;?>
+                        <td><?= $value['created_at'] ?></td>
+                        <td><a class="editUser" data-id="<?= $value['id'] ?>"><i class="fas fa-edit icon-table-edit"></i></a>
+                            <i class="fas fa-trash-alt icon-table-delete" data-id="<?= $value['id'] ?>" data-title="<?= $value['fullname']?>" data-type="user_admin"></i>
                         </td>
                     </tr>
-                @endforeach
+                    <?php endforeach; ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end p-e-5 c-b">
-            {{$user->appends(['sort' => 'votes'])->links()}}
+            <!-- {{$user->appends(['sort' => 'votes'])->links()}} -->
          </div>
         </div>
     </div>
@@ -89,7 +88,6 @@
                         <div class="col-sm-10">
                             <select id="selectUser" name="selectUser">
                                 <option value="-2" selected>Please access for account</option>
-                                <option value="-1">Customer</option>
                                 <option value="0">Staff</option>
                                 <option value="1">Admin</option>
                             </select>
@@ -137,7 +135,6 @@
                         <div class="col-sm-10">
                             <select id="selectUserEdit" name="selectUserEdit">
                                 <option value=-2 >Please access for account</option>
-                                <option value=-1 >Customer</option>
                                 <option value=0 >Staff</option>
                                 <option value=1 >Admin</option>
                             </select>

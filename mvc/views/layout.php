@@ -15,7 +15,8 @@
     <meta property="og:description" content="Tất cả sản phẩm">
     <meta property="og:site_name" content="Angle and Devil store">
     <script src="https://kit.fontawesome.com/d5c2bf0a7a.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./public/css/home.css" type="text/css">
+    <!-- <link rel="stylesheet" href="./public/css/home.css" type="text/css"> -->
+   <?php echo '<link rel="stylesheet" type="text/css" href="http://127.0.0.1:8080/public/css/home.css" />' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
@@ -28,25 +29,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="__DIR__.'/../../../public/js/components/frontend/newCollection.js"></script>
+    <script type="text/javascript" src="http://127.0.0.1:8080/public/js/components/frontend/newCollection.js"></script>
 </head>
 <body>
     <div class="main-body">
         <div class="header-main">
             <div class="header">
                 <div class="header-left">
-                    <img src="./public/upload/header/logo_header.png" alt="logo">
+                    <img src="http://127.0.0.1:8080/public/upload/header/logo_header.png" alt="logo">
                 </div>
                 <div class="header-right">
                     <span class="icon-facebook"><i class="fab fa-facebook-f"></i></span>
                     <span class="icon-instagram"><i class="fab fa-instagram"></i></span>
-                    <span class="icon-account"><a href="/loginClient"><i class="fas fa-user-circle"></i></a></span>
+                    <span class="icon-account"><a href="/login"><i class="fas fa-user-circle"></i></a></span>
                     <span class="icon-seach" onclick="openpopup(1)"><i class="fas fa-search"></i></span>
                     <span class="icon-cart" onclick="openpopup(2)"><i class="fas fa-shopping-cart count-shopping">
-                        @if (!empty($cart))
-                            <div class="count-cart">{{count($cart)}}</div>
-                        @endif
-                          
+                    <?php if(!empty($data["cart"])) :?>
+                            <div class="count-cart"><?= count($data["cart"])?></div>
+                        <?php endif;?>
                         </i></span>
                     <span class="icon-menu"><i class="fas fa-bars"></i><span class="bar"></span></span>
                 </div>
@@ -83,11 +83,11 @@
                             <a href="#"><?= $data["type"] ?></a>
                         </li>
                     <?php endif;?>
-                    @if($product ?? '')
+                    <?php if(!empty($data["productTitle"])) :?>
                         <li class="breadcrumb-item">
-                            <a href="/products/{{$product['slug']}}">{{$product['title']}}</a>
+                            <a href="/products/<?= $data["productTitle"]?>"><?= $data["productTitle"]?></a>
                         </li>
-                    @endif
+                    <?php endif;?>
                    
                 </ol>
             </div>
@@ -98,7 +98,7 @@
             <div class="main">
                 <div class="zing-content">
                     <div class="container">
-                    <?php require_once "./mvc/views/pages/".$data["Page"].".php" ?>
+                        <?php require_once "./mvc/views/pages/".$data["Page"].".php" ?>
                     </div>
                 </div>
             </div>
@@ -221,27 +221,27 @@
             </div>
             <div class="cart-view clearfix">
                 <div class="cart-product">
-                    @if (!empty($cart))
-                        @foreach ($cart as $valueCart)
-                            <table id="cart-view" class="table text-center border-table cart_{{$valueCart['id']}}"><tbody><tr class="item_2">
-                                <td class="img"><a href="/products/{{$valueCart['slug']}}" title="/products/{{$valueCart['slug']}}"><img src="/upload/product/{{$valueCart['image']}}" alt="/products/{{$valueCart['slug']}}"></a></td>
+                    <?php if (!empty($data['cart'])) :?>
+                        <?php foreach ($data['cart'] as $valueCart) :?>
+                            <table id="cart-view" class="table text-center border-table cart_<?= $valueCart['id']?>"><tbody><tr class="item_2">
+                                <td class="img"><a href="/products/<?= $valueCart['slug']?>" title="/products/<?= $valueCart['slug']?>"><img src="http://127.0.0.1:8080/public/upload/product/<?= $valueCart['image']?>" alt="/products/<?= $valueCart['slug']?>"></a></td>
                                 <td class="table-product-p">
-                                    <a class="pro-title-view" href="/products/{{$valueCart['slug']}}" title="/products/{{$valueCart['slug']}}">{{$valueCart['title']}}</a>
-                                    <span class="variant">{{$valueCart['size']}}</span>	
-                                    <span class="pro-quantity-view">{{$valueCart['quality']}}</span>
-                                    <span class="pro-price-view" data-price="{{$valueCart['price']}}">{{number_format($valueCart['price'],0,'',',')}}<u class="format_d">đ</u></span>
-                                    <span class="remove_link remove-cart"><a onclick="deleteCart({{$valueCart['id']}})" ><i class="fa fa-times"></i></a></span>				
+                                    <a class="pro-title-view" href="/products/<?= $valueCart['slug']?>" title="/products/<?= $valueCart['slug']?>"><?= $valueCart['title']?></a>
+                                    <span class="variant"><?= $valueCart['size']?></span>	
+                                    <span class="pro-quantity-view"><?= $valueCart['quality']?></span>
+                                    <span class="pro-price-view" data-price="<?= $valueCart['price']?>"><?= number_format($valueCart['price'],0,'',',')?><u class="format_d">đ</u></span>
+                                    <span class="remove_link remove-cart"><a onclick="deleteCart(<?= $valueCart['id']?>)" ><i class="fa fa-times"></i></a></span>				
                                 </td>
                             </tr></tbody></table>
-                        @endforeach
-                    @else
+                        <?php endforeach;?>
+                    <?php else :?>
                 </div>
                 <table id="cart-view" class="table text-center border-table"><tbody><tr class="item_2">
                     <td class="table-product-p">
                         Hiện Tại Chưa Có Sản Phẩm
                     </td>
                 </tr></tbody></table> 
-                @endif
+                <?php endif;?>
 				<span class="line"></span>
 				<table class="table-total table border-table">
 					<tbody><tr>

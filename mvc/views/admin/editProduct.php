@@ -1,6 +1,6 @@
 
-<link rel="stylesheet" href="./public/js/select2/dist/css/select2.min.css">
-<script type="text/javascript" src="./public/js/components/productCreate.js"></script>
+<link rel="stylesheet" href="http://127.0.0.1:8080/public/js/select2/dist/css/select2.min.css">
+<script type="text/javascript" src="http://127.0.0.1:8080/public/js/components/productCreate.js"></script>
 <div class="breadcrumb">
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item">Admin</li>
@@ -21,7 +21,7 @@
                 </button>
                 <button class="btn btn-block btn-primary active" type="button"
                     aria-pressed="true">
-                    <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/admin/product">Huỷ</a></li>
+                    <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/product">Huỷ</a></li>
                 </button>
             </div>
         </div>
@@ -171,7 +171,7 @@
                     </button>
                     <button class="btn btn-block btn-primary active" type="button"
                         aria-pressed="true">
-                        <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/admin/product">Huỷ</a></li>
+                        <li style="list-style: none"><a style="color:#fff;text-decoration:none;" href="/product">Huỷ</a></li>
                     </button>
                 </div>
               </div>
@@ -203,6 +203,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="./public/js/select2/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="http://127.0.0.1:8080/public/js/select2/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

@@ -8,24 +8,16 @@ class collectionModel extends DB{
         $qr = "SELECT * FROM collection";
         return $this->conn->query($qr)->fetchAll();
     }
-    // public static function addTag($title)
-    // {
-    //     $slug =\Str::slug($title);
-    //     $collection = Collection::where('slug',$slug)->where('type','tag')->first();
-    //     if($collection){
-    //         return $collection->id;
-    //     }
-    //     $collection = new self();
-    //     $collection->title = $title;
-    //     $collection->slug =  $slug;
-    //     $collection->description = "";
-    //     $collection->type = "tag";
-    //     $collection->created_at = date('Y-m-d H:i:s');
-    //     $collection->updated_at = date('Y-m-d H:i:s');
-    //     $collection->save();
-    //     return $collection->id;
-
-    // }
-
+    public function createCollection($title,$des,$handle) {
+        $created_at = date("Y-m-d h:i:s");
+        $qr = "INSERT INTO collection (title, description,parent_id, slug,type,created_at, updated_at)
+        VALUES ('$title','$des', '0', '$handle','category', '$created_at', '$created_at')";
+        return $this->conn->query($qr)->fetchAll();
+    }
+    public function updateCollection($id,$title,$des,$handle) {
+        $created_at = date("Y-m-d h:i:s");
+        $qr = "UPDATE collection SET title ='$title', description = '$des', parent_id = '0', slug = '$handle',type ='category', created_at = '$created_at', updated_at = '$created_at' WHERE id = '$id'";
+        return $this->conn->query($qr)->fetchAll();
+    }
 }
 ?>
