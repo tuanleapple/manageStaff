@@ -2,10 +2,20 @@
 
 ## Install
 
-***setup VM XAMPP on macos:***
-**setup VM XAMPP on macos:**
+***setup VM XAMPP:***
 ```
-sudo nano /etc/hosts 
+https://www.youtube.com/watch?v=K-qXW9ymeYQ
+```
+*** /Applications/XAMPP/xamppfiles/etc/extra/httpd-vhosts.conf:***
+```
+<VirtualHost *:80>
+    DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs/managestaff/index.php"
+    ServerName manageStaff.local
+	<Directory "/Applications/XAMPP/xamppfiles/htdocs/managestaff/index.php">
+		Options Indexes FollowSymLinks Includes execCGI
+		AllowOverride All
+	</Directory>
+</VirtualHost>
 ```
 ***Install:***
 ```
