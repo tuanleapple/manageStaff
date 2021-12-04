@@ -321,13 +321,13 @@
                             </div>
                         </div>
                         <div class="step-footer">
-                            <form id="form_next_step" accept-charset="UTF-8" method="post">
-                                <input name="utf8" type="hidden" value="✓">
+                            <!-- <form id="form_next_step" accept-charset="UTF-8" method="post"> -->
+                                <!-- <input name="utf8" type="hidden" value="✓"> -->
                                 <button class="step-footer-continue-btn btn">
                                     <span class="btn-content">Thanh toán</span>
                                     <i class="btn-spinner icon icon-button-spinner"></i>
                                 </button>
-                            </form> 
+                            <!-- </form>  -->
                             <a class="step-footer-previous-link" href="/cart">
                                 <svg class="previous-link-icon icon-chevron icon" xmlns="http://www.w3.org/2000/svg"
                                     width="6.7" height="11.3" viewBox="0 0 6.7 11.3">

@@ -1,7 +1,5 @@
 <?php
 
-// http://localhost/live/Home/Show/1/2
-
 
 class HomeController extends BaseController {
     function setCookieClient() {
@@ -38,6 +36,24 @@ class HomeController extends BaseController {
             "pagination" => $pagination[0],
         ]);
     }
+    function collections($id){
+        $type = 'ALL COLLECTION';
+        $product = $this->model('productModel')->product();
+        $collection = $this->model('collectionModel')->collection();
+        $collection_product = $this->model('collectionProductModel')->collectionProduct();
+        $pagination = $this->model('productModel')->paginations($page = 1, $id);
+        $product = $pagination[1];
+        $cart = $this->model('cartModel')->cart();
+        $this->view("layout", [
+            "Page"=>"main",
+            "product"=> $product,
+            "collection"=> $collection,
+            "collectionProduct"=> $collection_product,
+            "type" => $type,
+            "cart" => $cart,
+            "pagination" => $pagination[0],
+        ]);
+    }
     function page($page) {
         $type = 'ALL COLLECTION';
         $product = $this->model('productModel')->product();
@@ -54,6 +70,19 @@ class HomeController extends BaseController {
             "type" => $type,
             "cart" => $cart,
             "pagination" => $pagination[0],
+        ]);
+    }
+    function new($title) {
+        $type = 'NEWS';
+        $collection = $this->model('collectionModel')->collection();
+        $cart = $this->model('cartModel')->cart();
+        $post = $this->model('PostModel')->news($title);
+        $this->view("layout", [
+            "Page"=>"new",
+            "collection"=> $collection,
+            "type" => $type,
+            "cart" => $cart,
+            "content" => $post[0]['content'],
         ]);
     }
     function view404(){
@@ -133,10 +162,15 @@ class HomeController extends BaseController {
             "total"=> $total,
         ]);
     }
+    function checkoutCart(){
+        $this->model('ProductModel')->billLog($_POST);
+        $success = array('data' => '1');
+        return print_r(json_encode($success));
+    }
     function login(){
-        // if (isset($_COOKIE["user_client"])) {
-        //     $this->account();
-        // }
+        if (isset($_COOKIE["user_client"])) {
+            $this->account();
+        }
             $type = 'Login';
             $collection = $this->model('collectionModel')->collection();
             $cart = $this->model('cartModel')->cart();
@@ -148,9 +182,9 @@ class HomeController extends BaseController {
             ]);
     }
     function signup(){
-        // if (isset($_COOKIE["user_client"])) {
-        //     $this->account();
-        // }
+        if (isset($_COOKIE["user_client"])) {
+            $this->account();
+        }
         $type = 'Sign In';
         $collection = $this->model('collectionModel')->collection();
         $cart = $this->model('cartModel')->cart();
@@ -174,17 +208,20 @@ class HomeController extends BaseController {
     function account(){
         if (isset($_COOKIE["user_client"])) {
             $type = 'User';
+            $getbill = $this->model('otherModel')->getbill();
+            $cus = $this->model('otherModel')->cus();
             $collection = $this->model('collectionModel')->collection();
             $cart = $this->model('cartModel')->cart();
             $this->view("layout", [
-                "Page"  =>"orderView",
+                "Page"  =>"view",
                 "type" => $type,
+                "cus" => $cus[0],
+                "getbill" => $getbill,
                 "collection" => $collection,
-                "cart" => $cart,
+                "cart" => $cart
             ]);
         }
 
     }
-    
 }
 ?>

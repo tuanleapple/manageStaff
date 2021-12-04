@@ -2,7 +2,7 @@
     <div class="title_all_product">ALL PRODUCT</div>
     <div class="collection">
         <?php foreach ($data["collectionProduct"] as $key => $value): ?>
-            <li><a href="#" title="<?= $value['title'] ?>"> <?= $value['title'] ?></a></li>
+            <li><a href="http://127.0.0.1:8080/collections/<?= $value['id'] ?>" title="<?= $value['title'] ?>"> <?= $value['title'] ?></a></li>
         <?php endforeach; ?>
     </div>
 </div>

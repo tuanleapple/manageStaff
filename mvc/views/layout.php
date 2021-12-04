@@ -42,7 +42,6 @@
                     <span class="icon-facebook"><i class="fab fa-facebook-f"></i></span>
                     <span class="icon-instagram"><i class="fab fa-instagram"></i></span>
                     <span class="icon-account"><a href="/login"><i class="fas fa-user-circle"></i></a></span>
-                    <span class="icon-seach" onclick="openpopup(1)"><i class="fas fa-search"></i></span>
                     <span class="icon-cart" onclick="openpopup(2)"><i class="fas fa-shopping-cart count-shopping">
                     <?php if(!empty($data["cart"])) :?>
                             <div class="count-cart"><?= count($data["cart"])?></div>
@@ -57,7 +56,7 @@
                         <ul class="clonemenu">
                             <?php foreach ($data["collection"] as $key => $value): ?>
                                     <li class="nav1">
-                                        <a href="#"><?= $value['title'] ?></a>
+                                        <a href="/new/<?= $value['id'] ?>"><?= $value['title'] ?></a>
                                     </li>
                             <?php endforeach; ?>
                         </ul>
@@ -67,9 +66,6 @@
         </div>
         <div class="search-main">
             <div class="seacher-product-main">
-                <!-- <input type="text" id="keyword1" class="search-width-720" placeholder="Tìm Kiếm Sản Phẩm .."
-                    onkeypress="doEnter(event,'keyword');">
-                <p class="mb-0" onclick="onSearch('keyword');"><i class="fas fa-search"></i></p> -->
             </div>
         </div>
       
@@ -129,8 +125,8 @@
                                 <p class="number_phone">
                                     <i class="fa fa-phone "></i>
                                     <span>Hỗ trợ / Mua hàng:</span>
-                                    <a href="tel:0907 799 384 - 0902 638 020">
-                                        0907 799 384 - 0902 638 020
+                                    <a href="#">
+                                    0984946840
                                     </a>
                                 </p>
                             </div>
@@ -163,9 +159,7 @@
                                     FOLLOW FANPAGE 
                                 </h4>
                                 <div class="footer-content footer-contact">						
-                                    <div class="footer-static-content"> 
-                                        <div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/badhabitsstore/" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=263266547210244&amp;container_width=286&amp;height=300&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Fbadhabitsstore%2F&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=true&amp;show_posts=false&amp;small_header=false"><span style="vertical-align: bottom; width: 286px; height: 130px;"><iframe name="f2174e8754b2cf" data-testid="fb:page Facebook Social Plugin" title="fb:page Facebook Social Plugin" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" style="border: medium none; visibility: visible; width: 286px; height: 130px;" src="https://www.facebook.com/v2.0/plugins/page.php?adapt_container_width=true&amp;app_id=263266547210244&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df14c8aad09680a2%26domain%3Dbadhabitsstore.vn%26origin%3Dhttps%253A%252F%252Fbadhabitsstore.vn%252Ff3cc04377b1baec%26relation%3Dparent.parent&amp;container_width=286&amp;height=300&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Fbadhabitsstore%2F&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=true&amp;show_posts=false&amp;small_header=false" class="" width="1000px" height="300px" frameborder="0"></iframe></span></div>                                    </div>
-                                    <div style="clear:both;"></div>
+                           
                                 </div>
                             </div>
                         </div>             
@@ -178,11 +172,11 @@
                                     <ul>
                                         
                                         <li class="item">
-                                            <a href="https://instagram.com/badhabitsstore.vn" title="BAD HABITS">BAD HABITS</a>
+                                            <a href="#" title="BAD HABITS">BAD HABITS</a>
                                         </li>
                                         
                                         <li class="item">
-                                            <a href="https://instagram.com/badrabbit.club" title="BAD RABBIT">BAD RABBIT</a>
+                                            <a href="#" title="BAD RABBIT">BAD RABBIT</a>
                                         </li>
                                             
                                     </ul>

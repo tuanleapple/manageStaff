@@ -8,9 +8,11 @@ class AdminController extends BaseController {
     function loginAdmin(){
         $this->view("login", []);
     }
+
     function view404(){
         $this->view("page404", []);
     }
+
     function users(){
         $users = $this->model('userAdminModel')->user_admin();
         $this->view("layoutAdmin", [
@@ -18,14 +20,25 @@ class AdminController extends BaseController {
             "users"=> $users
         ]);
     }
+    
     function product(){
-        $products = $this->model('productModel')->productAdmin();
+        $qr = "SELECT product.*,(SELECT SUM(quality) FROM variant WHERE product_id = product.id) AS qualityProduct FROM product ORDER BY product.created_at DESC ";
+        $products = $this->model('productModel')->paginationTemplate($page = 1, $qr, 'product');
         $this->view("layoutAdmin", [
             "Page"=>"product",
-            "products"=> $products,
+            "products"=> $products[1],
+            "pagination" => $products[0],
         ]);
     }
-
+    function productPage($page) {
+        $qr = "SELECT product.*,(SELECT SUM(quality) FROM variant WHERE product_id = product.id) AS qualityProduct FROM product ORDER BY product.created_at DESC ";
+        $products = $this->model('productModel')->paginationTemplate($page, $qr, 'product');
+        $this->view("layoutAdmin", [
+            "Page"=>"product",
+            "products"=> $products[1],
+            "pagination" => $products[0],
+        ]);
+    }
     function post(){
         $post = $this->model('PostModel')->getPost();
         $this->view("layoutAdmin", [
@@ -33,24 +46,42 @@ class AdminController extends BaseController {
             "post"=> $post,
         ]);
     }
+
     function log(){
-        $log = $this->model('LogModel')->logs();
+        $qr = "SELECT log.user_id,log.module,log.message,log.created_at,user_admin.fullname  FROM log INNER JOIN user_admin WHERE log.user_id = user_admin.id ";
+        $log = $this->model('productModel')->paginationTemplate($page = 1, $qr, 'log');
         $this->view("layoutAdmin", [
             "Page"=>"log",
-            "logs"=> $log,
+            "logs"=> $log[1],
+            "pagination" => $log[0],
         ]);
     }
+
+    function logPage($page){
+        $qr = "SELECT log.user_id,log.module,log.message,log.created_at,user_admin.fullname  FROM log INNER JOIN user_admin WHERE log.user_id = user_admin.id ";
+        $log = $this->model('productModel')->paginationTemplate($page, $qr, 'log');
+        $this->view("layoutAdmin", [
+            "Page"=>"log",
+            "logs"=> $log[1],
+            "pagination" => $log[0],
+        ]);
+    }
+
     function editProduct($id){
-        $collectionProduct = $this->model('collectionProductModel')->collectionProduct();
-        $gender = $this->model('collectionProductModel')->attributeGender();
-        $size = $this->model('collectionProductModel')->attributeSize();
+        $product = $this->model('productModel')->productPage($id);
         $this->view("layoutAdmin", [
             "Page"=>"editProduct",
-            "collectionProduct"=>$collectionProduct,
-            "gender"=> $gender,
-            "size"=>$size,
+            "product"=>$product,
         ]);
     }
+    function editProducts(){
+        $product = $this->model('productModel')->editProducts($_POST);
+        if ($product) {
+            $success = array('data' => '1');
+            return print_r(json_encode($success));
+        }
+    }
+
     function createProduct(){
         $collectionProduct = $this->model('collectionProductModel')->collectionProduct();
         $gender = $this->model('collectionProductModel')->attributeGender();
@@ -76,44 +107,44 @@ class AdminController extends BaseController {
             "Page"=>"createPost",
         ]);
     }
+
     function createUser(){
         $this->model('userAdminModel')->createUser($_POST);
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
     function editUser(){
         $this->model('userAdminModel')->editUser($_POST);
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
     function findUser(){
         $check = $this->model('userAdminModel')->findUser($_POST['id']);
         $success = array('data' => '1','user' => $check[0]);
         return print_r(json_encode($success));
     }
+
     function createCollection(){
         $title = $_POST['title'];
         $des = $_POST['des'];
         $handle = $this->convert_handle($title);
         $this->model('collectionModel')->createCollection($title, $des, $handle);
-        $moduleLog = 'create_collection';
-        $messageLog = 'Tạo mới danh muc '.$_POST['title'];
-        $this->model('LogModel')->add($moduleLog, $messageLog, json_encode($_POST['title']));
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
     function editCollection(){
         $id = $_POST['id'];
         $title = $_POST['title'];
         $des = $_POST['des'];
         $handle = $this->convert_handle($title);
         $this->model('collectionModel')->updateCollection($id, $title, $des, $handle);
-        $moduleLog = 'edit_collection';
-        $messageLog = 'Chỉnh sửa danh muc '.$_POST['title'];
-        $this->model('LogModel')->add($moduleLog, $messageLog, json_encode($_POST['title']));
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
     function collectionProduct(){
         $collectionProduct = $this->model('collectionProductModel')->collectionProduct();
         $gender = $this->model('collectionProductModel')->attributeGender();
@@ -125,6 +156,7 @@ class AdminController extends BaseController {
             "size"=>$size,
         ]);
     }
+
     function createProductimage()
     {
         $images = array();
@@ -140,6 +172,7 @@ class AdminController extends BaseController {
         $success = array('data' => '1','images'=>$images);
         return print_r(json_encode($success));
     }
+
     function createImage()
     {
         $uploads_dir = getcwd().DIRECTORY_SEPARATOR .'public/upload/post/';
@@ -149,6 +182,7 @@ class AdminController extends BaseController {
         $success = array('data' => '1','name'=>$name);
         return print_r(json_encode($success));
     }
+
     function tinymceUploadImage()
     {
         if (isset($_SERVER['HTTPS'])) {
@@ -157,7 +191,7 @@ class AdminController extends BaseController {
             $protocol = 'http';
         }
         $mainUrl = DIRECTORY_SEPARATOR;
-        $imageFolder = "public/upload/post/";
+        $imageFolder ="public/upload/post/";
         if (!is_dir($imageFolder)) {
             mkdir($mainUrl . $imageFolder, 0777);
         }
@@ -171,13 +205,14 @@ class AdminController extends BaseController {
                 return;
             }
             // Verify extension
-            if (!in_array(strtolower(pathinfo($temp['name'], PATHINFO_EXTENSION)), array("gif", "jpg", "png"))) {
+            if (!in_array(strtolower(pathinfo($temp['name'], PATHINFO_EXTENSION)), array("gif","jpeg", "jpg", "png"))) {
                 header("HTTP/1.1 400 Invalid extension.");
                 return;
             }
             
             // Accept upload if there was no origin, or if it is an accepted origin
             $filetowrite = $imageFolder . $temp['name'];
+            // var_dump($temp['tmp_name']);die;
             move_uploaded_file($temp['tmp_name'], $filetowrite);
             $arr = array(
                 'code' => 1,
@@ -187,6 +222,7 @@ class AdminController extends BaseController {
             return print_r(json_encode($arr));
         }
     }
+
     function productDeleteImage()
     {
         $image_path = getcwd().DIRECTORY_SEPARATOR . "public/upload/product/".$_POST['image']; 
@@ -196,12 +232,14 @@ class AdminController extends BaseController {
             return print_r(json_encode($success));
         }
     }
+
     function createPostAdmin()
     {
         $this->model('PostModel')->add($_POST);
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
     function collection(){
         $collection = $this->model('collectionModel')->collection();
         $this->view("layoutAdmin", [
@@ -209,11 +247,13 @@ class AdminController extends BaseController {
             "collection"=>$collection,
         ]);
     }
+
     function getCollection(){
         $collection = $this->model('collectionModel')->collection();
         $success = array('data' => '1','collection'=>$collection);
         return print_r(json_encode($success));
     }
+
     function signup(){
         $this->view("layout", [
             "Page"=>"signup",
@@ -230,11 +270,13 @@ class AdminController extends BaseController {
             return print_r(json_encode($success));
         }
     }
+
     function createCollectionProduct(){
         $this->view("layoutAdmin", [
             "Page"=>"createCollectionProduct",
         ]);
     }
+
     function collectionProductCreate(){
         $title = $_POST["title"];
         $content = $_POST["content"];
@@ -244,6 +286,7 @@ class AdminController extends BaseController {
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
     function collectionProductEdit(){
         $id = $_POST["id"];
         $title = $_POST["title"];
@@ -254,6 +297,7 @@ class AdminController extends BaseController {
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
     function editPostAdmin(){
         $id = $_POST["id"];
         $title = $_POST["title"];
@@ -271,6 +315,7 @@ class AdminController extends BaseController {
             "CollectionProduct"=>$CollectionProduct[0],
         ]);
     }
+
     function editPost($id) {
         $editPost = $this->model('PostModel')->findPost($id);
         $this->view("layoutAdmin", [
@@ -278,6 +323,7 @@ class AdminController extends BaseController {
             "post"=>$editPost[0],
         ]);
     }
+
     function delete() {
         $id = $_POST["id"];
         $type = $_POST["type"];
@@ -285,13 +331,33 @@ class AdminController extends BaseController {
         $success = array('data' => '1');
         return print_r(json_encode($success));
     }
+
+    function cancel() {
+        $this->model('otherModel')->cancel($_POST['id']);
+        $success = array('data' => '1');
+        return print_r(json_encode($success));
+    }
+
+    function changeStatus() {
+        $this->model('otherModel')->changeStatus($_POST['id'], $_POST['status']);
+        $success = array('data' => '1');
+        return print_r(json_encode($success));
+    }
+
+    function deleteVariant() {
+        $this->model('ProductModel')->deleteVariant($_POST['id']);
+        $success = array('data' => '1');
+        return print_r(json_encode($success));
+    }
+
     function billLog() {
-        $CollectionProduct = $this->model('collectionProductModel')->findCollectionProduct($id);
+        $billLog = $this->model('otherModel')->billLog();
         $this->view("layoutAdmin", [
             "Page"=>"billLog",
-            "CollectionProduct"=>$CollectionProduct[0],
+            "billLog"=>$billLog,
         ]);
     }
+
     function convert_handle($str)
     {
         $str = trim($str);

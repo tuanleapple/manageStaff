@@ -70,11 +70,8 @@
                 <?php endforeach;?>
             </tbody>
         </table>
-        <div class="d-flex justify-content-end p-e-5 c-b">
-            <!-- Tổng số product trả về : {{ $product->total() }} -->
-         </div>
          <div class="d-flex justify-content-end p-e-5">
-             <!-- {{ $product->links() }} -->
+         <div class="product_link"><?= $data["pagination"] ?></div>
          </div>
         </div>
     </div>

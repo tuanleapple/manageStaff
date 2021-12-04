@@ -115,7 +115,6 @@ function deleteCart(e){
           if (data.data == 1) {
             $('.cart_'+e+'').remove();
                 totalPrice();
-             
           }else{
             alert('Dã có lỗi xảy ra !!!');
           }

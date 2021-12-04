@@ -29,7 +29,7 @@
              <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Title<span><strong style="color:red"> *</strong></span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"name="title" id="title" value="{{$product['title']}}" />
+                    <input type="text" class="form-control"name="title" id="title" value="<?= $data['product'][0]['title'];  ?>" />
                 </div>
               </div>
               <div class="form-group row m-g-1">
@@ -37,13 +37,13 @@
                 <div class="col-sm-10">
                     <select id="selectCollection" name="selectCollection">
                         <option value="-1">Please choose parent collecion ...</option>
-                        @foreach($collectionProduct as $key => $value)
-                            @if($value['id'] == $product['collection_id'])
-                                <option value={{$value['id']}} selected>{{$value['title']}}</option>
-                            @else
-                                <option value={{$value['id']}}>{{$value['title']}}</option>
-                            @endif
-                        @endforeach
+                        <?php foreach($data['product'][1] as $value) : ?>
+                            <?php if($value['id'] == $data['product'][0]['collection_id']) :?>
+                                <option value=<?= $value['id']?> selected ><?= $value['title']?></option>
+                            <?php else:?>
+                                <option value=<?= $value['id']?>><?= $value['title']?></option>
+                            <?php endif;?>
+                        <?php endforeach;?>
                     </select>
                 </div>
             </div>
@@ -51,22 +51,21 @@
                 <label class="col-sm-2 col-form-label">Image<span></label>
                 <div class="col-sm-10">
                     <form class="form-feature-product" enctype="multipart/form-data">
-                        @csrf
                         <input class="form-control" type="file" name="images[]" multiple/>
                     </form>
                     <div class="image_upload">
-                        @foreach(json_decode($product['list_image']) as $key => $value)
-                            <div class="item" data-getImage={{$value}}><a class="image_a_upload">
-                                <img src="/upload/product/{{$value}}" style="padding: 0.25rem;"/></a><i class="fas fa-times item-icon" data-image={{$value}}></i>
+                        <?php foreach(json_decode($data['product'][0]['list_image']) as $value) : ?>
+                            <div class="item" data-getImage=<?= $value?>><a class="image_a_upload">
+                                <img src="http://127.0.0.1:8080/public/upload/product/<?= $value?>" style="padding: 0.25rem;"/></a><i class="fas fa-times item-icon" data-image=<?= $value?>></i>
                             </div>
-                        @endforeach
+                        <?php endforeach;?>
                     </div>
                 </div>
               </div>
               <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Description</label>
                 <div class="col-sm-10">
-                    <textarea type="text" id="description" class="form-control" rows="6" cols="50" value="{{$product['description']}}">{{$product['description']}}</textarea>
+                    <textarea type="text" id="description" class="form-control" rows="6" cols="50" value="<?= $data['product'][0]['description'] ?>" ><?= $data['product'][0]['description'] ?></textarea>
                 </div>
               </div>
               <div class="form-group row m-g-1">
@@ -74,13 +73,13 @@
                 <div class="col-sm-10">
                     <select id="selectGender" name="selectGender">
                         <option value="-1" checked>Please choose gender ...</option>
-                        @foreach($gender as $key => $value)
-                            @if($value['id'] == $product['product_gender'])
-                                <option value={{$value['id']}} selected>{{$value['title']}}</option>
-                            @else
-                                <option value={{$value['id']}}>{{$value['title']}}</option>
-                            @endif
-                        @endforeach
+                        <?php foreach($data['product'][2] as $value) : ?>
+                            <?php if($value['id'] == $data['product'][0]['product_gender']) :?>
+                                <option value=<?= $value['id']?> selected ><?= $value['title']?></option>
+                            <?php else:?>
+                                <option value=<?= $value['id']?>><?= $value['title']?></option>
+                            <?php endif;?>
+                        <?php endforeach;?>
                     </select>
                 </div>
         
@@ -90,37 +89,33 @@
                 <div class="col-sm-9">
                     <select id="selectSize" name="selectSize">
                         <option value="-1" selected disabled>Please choose size ...</option>
-                        @if(!empty($optionCheck))
-                            {!! $optionCheck !!}
-                        @else
-                            @if(!empty($size))
-                            @foreach($size as $key => $value)
-                            <option value={{$value['id']}} data-size="{{$value['title']}}">{{$value['title']}}</option>
-                            @endforeach
-                            @endif
-                        @endif
+                        <?php if(!empty($data['product'][5])) : ?>
+                            <?= $data['product'][5] ?>
+                        <?php else:?>
+                            <?php foreach($data['product'][3] as $value) : ?>
+                                <option value="<?= $value['id']?>"><?= $value['title']?></option>
+                            <?php endforeach;?>
+                        <?php endif;?>
                     </select>
                 </div>
                 <div class="col-sm-1"><button type="button" class="btn btn-block btn-dart " id="plus-size" type="button" aria-pressed="true"><i class="fas fa-plus"></i></button></div>
               </div>
-              @if(!empty($variant))
                 <div class="form-group row m-g-1 attribute-size">
                     <label class="col-sm-2 col-form-label attribute-title">
                         <span>Các Size Đã Chọn : </span>
-                        @foreach($variant  as $value)
-                        <span class="attribute-{{$value['title']}} span-attribute" >{{$value['title']}}</span>
-                        @endforeach
+                        <?php foreach($data['product'][4] as $value) : ?>
+                        <span class="attribute-<?= $value['title']?> span-attribute" ><?= $value['title']?></span>
+                        <?php endforeach;?>
                     </label>
                     <div class="col-sm-10 attribute-size-info">
                         <div class="row attribute-size-info-row">
                             <div class="col-sm-2 size">Size </div><div class="col-sm-10 quality-size"> Số Lượng</div>
-                            @foreach($variant  as $value)
-                            <div class="attribute-info-{{$value['title']}} atribute-info-css"><div class="row"><div class="col-sm-2"><label>{{$value['title']}}</label></div><div class="col-sm-8"><input class="input-size-quality" placeholder="Vui Lòng nhập số lượng của size tương ứng " value="{{$value['quality']}}" data-size-attribute="{{$value['id']}}"/></div><div class=" col-sm-2 delete-icon" data-delete-size="{{$value['title']}}" data-variant="{{$value['id']}}" data-id="{{$value['attribute_id']}}"><i class="fas fa-trash-alt"></i></div></div></div>
-                            @endforeach
+                            <?php foreach($data['product'][4] as $value) : ?>
+                            <div class="attribute-info-<?= $value['title']?> atribute-info-css"><div class="row"><div class="col-sm-2"><label><?= $value['title']?></label></div><div class="col-sm-8"><input class="input-size-quality" placeholder="Vui Lòng nhập số lượng của size tương ứng " value="<?= $value['quality']?>" data-size-attribute="<?= $value['attribute_id']?>"/></div><div class=" col-sm-2 delete-icon" data-delete-size="<?= $value['title']?>" data-variant="<?= $value['id']?>" data-id="<?= $value['attribute_id']?>"><i class="fas fa-trash-alt"></i></div></div></div>
+                            <?php endforeach;?>
                         </div>
                     </div>
                 </div>
-              @else
                 <div class="form-group row m-g-1 attribute-size d-none">
                     <label class="col-sm-2 col-form-label attribute-title">
                         <span>Các Size Đã Chọn : </span>
@@ -129,43 +124,42 @@
                         <div class="row attribute-size-info-row"></div>
                     </div>
                 </div>
-              @endif
               <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Price (vnd)</label>
                 <div class="col-sm-10">
-                    <input type="text" id="price" class="form-control" value="{{$product['price']}}"/>
+                    <input type="text" id="price" class="form-control" value="<?= $data['product'][0]['price'];  ?>"/>
                 </div>
               </div>
         
               <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Display</label>
                 <div class="col-sm-10">
-                    @if ($product['display'] == 1)
+                <?php if ((int)$data['product'][0]['display'] == 1) :  ?>
                         <input class="form-check-input" type="checkbox" value="" id="checkdisplay" checked>
-                    @else
+                    <?php else: ?>
                         <input class="form-check-input" type="checkbox" value="" id="checkdisplay">
-                    @endif   
+                     <?php endif; ?> 
                 </div>
               </div>
               <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">Highlights</label>
                 <div class="col-sm-10">
-                    @if ($product['highlights'] == 1)
+                <?php if ((int)$data['product'][0]['highlights'] == 1) :  ?>
                     <input class="form-check-input" type="checkbox" value="" id="checkhighlight" checked>
-                    @else
+                    <?php else: ?>
                         <input class="form-check-input" type="checkbox" value="" id="checkhighlight" >
-                    @endif 
+                        <?php endif; ?> 
                 </div>
               </div>
               <div class="form-group row m-g-1">
                 <label class="col-sm-2 col-form-label">meta-title</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control meta-title"name="meta-title" value={{$product['meta_title']}}>
+                    <input type="text" class="form-control meta-title"name="meta-title" value="<?= $data['product'][0]['meta_title'];  ?>">
                 </div>
             </div>
               <div class="form-group row m-g-1">
                 <div class="button-card">
-                    <button class="btn btn-block btn-primary active" id="editCollectionProduct" data-id={{$product['id']}} type="button"
+                    <button class="btn btn-block btn-primary active" id="editCollectionProduct" data-id="<?= $data['product'][0]['id'];  ?>" type="button"
                         aria-pressed="true">
                         <li style="list-style: none"><a style="color:#fff;text-decoration:none" >Lưu</a></li>
                     </button>

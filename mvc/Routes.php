@@ -8,6 +8,12 @@
         $home = new HomeController();
         $home->setCookieClient();
     }
+    if (is_numeric($the_array[0])){
+        require_once __DIR__ .'/controllers/HomeController.php';
+        $home = new HomeController();
+        $home->new($the_array[0]);
+        return false;
+    }
     if (!empty($the_array[1])){
         $url = parse_url($request);
         $check = strtok($the_array[1], '?');
@@ -29,6 +35,11 @@
                 $home = new HomeController();
                 $home->products($the_array[1]);
                 break;
+            case '/collections/'. $the_array[1] :
+                require_once __DIR__ .'/controllers/HomeController.php';
+                $home = new HomeController();
+                $home->collections($the_array[1]);
+                break;
             case '/editCollectionProduct/'. $the_array[1] :
                 require_once __DIR__ .'/controllers/AdminController.php';
                 $home = new AdminController();
@@ -43,6 +54,16 @@
                 require_once __DIR__ .'/controllers/AdminController.php';
                 $home = new AdminController();
                 $home->editProduct($the_array[1]);
+                break;
+            case '/log/'. $the_array[1] :
+                require_once __DIR__ .'/controllers/AdminController.php';
+                $home = new AdminController();
+                $home->logPage($the_array[1]);
+                break;
+            case '/product/'. $the_array[1] :
+                require_once __DIR__ .'/controllers/AdminController.php';
+                $home = new AdminController();
+                $home->productPage($the_array[1]);
                 break;
             case '/page/'. $the_array[1] :
                 require_once __DIR__ .'/controllers/HomeController.php';
@@ -78,6 +99,11 @@
                 require_once __DIR__ .'/controllers/HomeController.php';
                 $home = new HomeController();
                 $home->checkout();
+                break;
+            case '/checkoutsCart' :
+                require_once __DIR__ .'/controllers/HomeController.php';
+                $home = new HomeController();
+                $home->checkoutCart();
                 break;
             case '/checkLoginClient' :
                 require_once __DIR__ .'/controllers/HomeController.php';
@@ -164,11 +190,11 @@
                 $home = new AdminController();
                 $home->billLog();
                 break;
-            // case '/editProduct' :
-            //     require_once __DIR__ .'/controllers/AdminController.php';
-            //     $home = new AdminController();
-            //     $home->editProduct();
-            //     break;
+            case '/editProducts' :
+                require_once __DIR__ .'/controllers/AdminController.php';
+                $home = new AdminController();
+                $home->editProducts();
+                break;
             case '/delete' :
                 require_once __DIR__ .'/controllers/AdminController.php';
                 $home = new AdminController();
@@ -248,6 +274,21 @@
                 require_once __DIR__ .'/controllers/AdminController.php';
                 $home = new AdminController();
                 $home->getCollection();
+                break;
+            case '/deleteVariant' :
+                require_once __DIR__ .'/controllers/AdminController.php';
+                $home = new AdminController();
+                $home->deleteVariant();
+                break;
+            case '/changeStatus' :
+                require_once __DIR__ .'/controllers/AdminController.php';
+                $home = new AdminController();
+                $home->changeStatus();
+                break;
+            case '/cancel' :
+                require_once __DIR__ .'/controllers/AdminController.php';
+                $home = new AdminController();
+                $home->cancel();
                 break;
             default:
                 require_once __DIR__ .'/controllers/HomeController.php';

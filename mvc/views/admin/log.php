@@ -36,11 +36,8 @@
                 <?php endforeach;?>
             </tbody>
         </table>
-        <div class="d-flex justify-content-end p-e-5 c-b">
-            Tổng số log trả về : {{ $log->total() }}
-         </div>
          <div class="d-flex justify-content-end p-e-5">
-             {{ $log->links() }}
+             <div class="product_link"><?= $data["pagination"] ?></div>
          </div>
         </div>
     </div>

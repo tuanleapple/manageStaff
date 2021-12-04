@@ -5,12 +5,14 @@ class PostModel extends DB{
     public function add($re)
     {
         $title = $re['title'];
-        $content = $re['content'];
+        $content = (string)$re['content'];
         $collection_id = $re['parent_id'];
         $created_at = date("Y-m-d h:i:s");
         $qr = "INSERT INTO post ( title, content, collection_id,created_at, updated_at)
         VALUES ('$title','$content', '$collection_id', '$created_at', '$created_at')";
-        return $this->conn->query($qr)->fetchAll();
+        $pdo_statement = $this->conn->prepare($qr);
+        $pdo_statement->execute();
+        return $pdo_statement->fetchAll();
     }
     public function getPost()
     {
@@ -26,6 +28,12 @@ class PostModel extends DB{
     public function updatePost($id, $title, $content, $parent_id) {
         $qr = "UPDATE post SET title = '$title',content ='$content', collection_id = '$parent_id' WHERE id = '$id'";
         $this->conn->query($qr)->fetchAll();
+    }
+
+    public function news($title)
+    {
+        $qr = "SELECT * FROM post WHERE collection_id = '$title' ";
+        return $this->conn->query($qr)->fetchAll();
     }
 }
 ?>

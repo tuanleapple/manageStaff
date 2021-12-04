@@ -1,37 +1,60 @@
-<link rel="stylesheet" href="./public/js/select2/dist/css/select2.min.css">
 <div class="breadcrumb">
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item">Admin</li>
-        <li class="breadcrumb-item">Danh Mục</li>
+        <li class="breadcrumb-item">Bill</li>
     </ol>
 </div>
 <div class="page-main">
     <div class="card">
         <div class="card-header">
             <div class="card-header-left">
-                Danh Mục
+                Bill
             </div>
-            <div class="card-header-right"><button class="btn btn-block btn-primary active" id="createCollection"
-                    type="button" aria-pressed="true">
-                    <li style="list-style: none"><a style="color:#fff;text-decoration:none" >Tạo Danh Mục </a></li>
-                    </button></div>
         </div>
         <div class="card-body">
             <table id="tableCollection" class="table table-resposive table-hover table-striped table-bordered text-center">
             <thead class="thead-dark">
                 <tr class="table-primary">
                     <th>stt</th>
-                    <th>Title</th>
-                    <th>Đường dẫn link</th>
+                    <th>image</th>
+                    <th>Full Name</th>
+                    <th>Địa chỉ</th>
+                    <th>Tax</th>
+                    <th>Tổng Cộng</th>
+                    <th>Ngày Tạo</th>
+                    <th>Trạng Thái</th>
                     <th>Chức Năng</th>
                 </tr>
-                <?php foreach($data['collection'] as $key => $value) : ?>
+                <?php foreach($data['billLog'] as $key => $value) : ?>
                     <tr>
-                        <td><?= $key ?></td>
-                        <td><?= $value['title']?></td>
-                        <td><?= $value['slug']?></td>
-                        <td><i class="fas fa-edit icon-table-edit" data-id=<?= $value['id']?> data-title="<?= $value['title']?>" data-des="<?= $value['description']?>" data-parent="<?= $value['parent_id']?>"></i>
-                            <i class="fas fa-trash-alt icon-table-delete" data-id="<?= $value['id']?>" data-title="<?= $value['title']?>" data-type="collection"></i>
+                        <td><?= $key+1 ?></td>
+                        <td>
+                        <?php if(!empty(json_decode($value['product_image']))) : ?>
+                            <?php foreach (json_decode($value['product_image']) as $image) :?>
+                            <a class="img_table"><img src="/public/upload/product/<?= $image ?>" alt=<?= $image?></a>
+                            <?php endforeach; ?>
+                        <?php  else : ?>
+                            <a class="img_table"><img src="/public/images/default_image.png" alt='No Image'></a>
+                        <?php  endif; ?>
+                        </td>
+                        <td><?= $value['customer_name']?></td>
+                        <td><?= $value['info'] ?> - <?= $value['nameWard'] ?> - <?= $value['nameDistrict'] ?> - tỉnh <?= $value['nameCity'] ?></td>
+                        <td><?= $value['tax']?></td>
+                        <td><?= number_format($value['total_price'],0,'',',')?><u class="format_d">đ</u></td>
+                        <td><?= $value['created_at']?></td>
+                        <td>
+                            <?php if($value['status'] == 1) :?>
+                                <span>Chờ Xác Nhận</span>
+                                <?php elseif($value['status'] == 2) :?>
+                                <span>Lấy Hàng</span>
+                                <?php elseif($value['status'] == 3) :?>
+                                <span>Hoàn Thành</span>
+                                <?php else :?>
+                                <span>Huỷ Bỏ</span>
+                            <?php endif; ?>
+                        </td>
+                        <td><i class="fas fa-edit icon-table-edit" data-id="<?= $value['id']?>" data-status="<?= $value['status']?>"></i>
+                            <i class="fas fa-trash-alt icon-cancel" data-id="<?= $value['id']?>"></i>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -46,39 +69,4 @@
     </div>
     
 </div>
-<div class="modal fade" id="collectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tạo Danh Mục</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group row m-b-2">
-                      <label class="col-sm-2 col-form-label">Tiêu Đề</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="titleCollection" placeholder="Vui lòng Nhập Tiêu Đề">
-                      </div>
-                    </div>
-                    <div class="form-group row m-b-2">
-                      <label  class="col-sm-2 col-form-label">Mô Tả</label>
-                      <div class="col-sm-10">
-                         <textarea rows="5" cols="50" type="text" class="form-control" id="desCollection" placeholder="Vui lòng Nhập Mô Tả"></textarea>
-                      </div>
-                    </div>
-    
-                  </form> 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="closeModalCollection">Đóng</button>
-                <button type="button" class="btn btn-primary"id="saveModalCollection" >Lưu</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script type="text/javascript" src="./public/js/components/collection.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript" src="./public/js/select2/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="http://127.0.0.1:8080/public/js/components/bill.js"></script>

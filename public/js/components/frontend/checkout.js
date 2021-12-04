@@ -74,19 +74,19 @@ $(document).on('click','.step-footer-continue-btn',function(){
     data.ward = $('select[name="customer_shipping_ward"]').find('option:selected').val();
     let lengthTable = $('.product-table').length;
     let checkCart = [];
-    console.log(data)
-    if(data.fullname.length == 0 || data.email.length == 0 || data.phone.length == 0 || data.address.length == 0|| data.tax.length == 0 ||data.city == -1||data.district == -1 ||data.ward == -1 ){
-        alert('Vui Lòng Điền Đầy Đủ Thông Tin !!');
-        return;
-    }
+    // if(data.fullname.length == 0 || data.email.length == 0 || data.phone.length == 0 || data.address.length == 0|| data.tax.length == 0 ||data.city == -1||data.district == -1 ||data.ward == -1 ){
+    //     alert('Vui Lòng Điền Đầy Đủ Thông Tin !!');
+    //     return false;
+    // }
     for(let i = 0 ; i<lengthTable ;i++){
         checkCart.push($('.product-table tbody tr.product').eq(i).attr('data-cart'));
     }
     data.cart = checkCart;
     $.ajax({
         type: "POST",
-        url: "/checkouts/cart",
+        url: "/checkoutsCart",
         data:data,
+        dataType: "json",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         cache: false,
         success: function (data) {

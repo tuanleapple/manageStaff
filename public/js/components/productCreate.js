@@ -158,6 +158,10 @@ $(document).on('click', '#createCollectionProduct', async function () {
     data.display = $('#checkdisplay:checked').length;
     data.highlight = $('#checkhighlight:checked').length;
     data.meta_title = $('.meta-title').val();
+    if (JSON.stringify( data.size ) === '{}' || JSON.stringify( data.image ) === '{}' || JSON.stringify( data.quality ) === '{}' || data.price.length == 0 || data.meta_title.length == 0) {
+        swal('create Product', 'Vui lòng Nhập đầy đử thông tin !!', 'error');
+        return false;
+    }
     $.ajax({
         type: 'POST',
         url: '/createProducts',
@@ -217,10 +221,13 @@ $(document).on('click', '.delete-icon', function () {
     }
 })
 function deleteVariant(e){
+    let data = {};
+    data.id = e;
     $.ajax({
         type: 'POST',
-        url: '/admin/product/deleteVariant/'+e,
+        url: '/deleteVariant',
         dataType: "json",
+        data:data,
         cache: false,
         success: function (data) {
             if (data.data == 1) {
@@ -257,6 +264,11 @@ $(document).on('click', '#editCollectionProduct',async function () {
     data.display = $('#checkdisplay:checked').length;
     data.highlight = $('#checkhighlight:checked').length;
     data.meta_title = $('.meta-title').val();
+    data.price = $('#price').val();
+    if (JSON.stringify( data.size ) === '{}' || JSON.stringify( data.image ) === '{}' || JSON.stringify( data.quality ) === '{}' || data.price.length == 0 || data.meta_title.length == 0) {
+        swal('create Product', 'Vui lòng Nhập đầy đử thông tin !!', 'error');
+        return false;
+    }
     $.ajax({
         type: 'POST',
         url: '/editProducts',

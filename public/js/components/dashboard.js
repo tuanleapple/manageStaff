@@ -56,8 +56,7 @@ $(document).on('click','.icon-table-delete',function(){
                     swal("Danh Mục", "Xoá "+ title +" Thành Công", "success");
                     setTimeout(function(){
                         window.location.href= window.location.href;
-                      },400); 
-
+                      },400);
                 } else {
                     swal("Danh Mục", "Đã có lỗi sảy ra !!", "error");
                 }
