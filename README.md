@@ -28,7 +28,7 @@ sudo nano /etc/hosts
 ***Nếu không chạy được run local bằng php :***
 ```
 cd Direction/path/project
-php -S 127.0.0.1:8000
+php -S 127.0.0.1:8080
 ```
 
 
