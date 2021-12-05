@@ -35,5 +35,22 @@ class PostModel extends DB{
         $qr = "SELECT * FROM post WHERE collection_id = '$title' ";
         return $this->conn->query($qr)->fetchAll();
     }
+
+    public function createAccount($body)
+    {
+        $fullname = $body['fullname'];
+        $password = password_hash($body['password'], PASSWORD_DEFAULT);
+        $email = $body['email'];
+        $bri_day = $body['dob'];
+        $tax = $body['tax'];
+        $gender = $body['gender'];
+        $created_at = date('Y-m-d H:i:s');
+        $qr = "INSERT INTO customer (fullname, password,email, bri_day,tax,gender,created_at, updated_at)
+        VALUES ('$fullname','$password', '$email', '$bri_day','$tax','$gender', '$created_at', '$created_at')";
+        $this->conn->query($qr)->fetchAll();
+        $qr = "SELECT * FROM customer WHERE password = '$password' AND  email = '$email'";
+        return $this->conn->query($qr)->fetchAll();
+
+    }
 }
 ?>

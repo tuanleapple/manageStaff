@@ -56,7 +56,7 @@
                         <ul class="clonemenu">
                             <?php foreach ($data["collection"] as $key => $value): ?>
                                     <li class="nav1">
-                                        <a href="/new/<?= $value['id'] ?>"><?= $value['title'] ?></a>
+                                        <a href="/<?= $value['id'] ?>"><?= $value['title'] ?></a>
                                     </li>
                             <?php endforeach; ?>
                         </ul>

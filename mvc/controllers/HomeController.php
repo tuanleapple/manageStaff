@@ -195,6 +195,13 @@ class HomeController extends BaseController {
             "cart" => $cart,
         ]);
     }
+    function accountCreate(){
+        $check = $this->model('PostModel')->createAccount($_POST);
+        setcookie("user_client", $check[0]['id'], time()+31556926);
+        $success = array('data' => '1');
+        return print_r(json_encode($success));
+    }
+
     function checkLoginClient(){
         $user = $_POST["email"];
         $pwd = $_POST["password"];

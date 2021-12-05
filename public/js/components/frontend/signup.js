@@ -22,14 +22,15 @@ $(document).on('click','#registers_submit',function(){
     checkPassword();
     $.ajax({
         type: "POST",
-        url: "/account/create",
-        data: data,          
+        url: "/accountCreate",
+        data: data,
+        dataType: "json",       
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         cache: false,
         success: function (data) {
-            if (data.status == 1) {
+            if (data.data == 1) {
                 setTimeout(function(){
-                    window.location.href="http://post.local/account/view";
+                    window.location.href="http://127.0.0.1:8080/account";
                   },400); 
             } else {
                 alert('Sever Đã có Lỗi !!!');

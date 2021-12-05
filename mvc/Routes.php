@@ -120,6 +120,11 @@
                 $home = new HomeController();
                 $home->signup();
                 break;
+            case '/accountCreate' :
+                require_once __DIR__ .'/controllers/HomeController.php';
+                $home = new HomeController();
+                $home->accountCreate();
+                break;
             case '/account' :
                 require_once __DIR__ .'/controllers/HomeController.php';
                 $home = new HomeController();
